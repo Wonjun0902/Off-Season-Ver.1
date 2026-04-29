@@ -1,4 +1,4 @@
-package frc.lib;
+package frc.robot.lib;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
