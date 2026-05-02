@@ -12,7 +12,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StringPublisher;
 import edu.wpi.first.networktables.StringTopic;
-import us.hebi.quickbuf.Descriptors.Descriptor;
 
 public class Elastic{
 
@@ -61,22 +60,22 @@ public class Elastic{
              */
             public static class Notification{
               @JsonProperty("level")
-              private Notification level;
+              private NotificationLevel level;
       
               @JsonProperty("description")
-              private Notification description;
+              private String description;
       
               @JsonProperty("title")
-              private Notification title;
+              private String title;
       
               @JsonProperty("displayTime")
-              private Notification displayTimeMillis;
+              private int displayTimeMillis;
       
               @JsonProperty("width")
-              private Notification width;
+              private double width;
       
               @JsonProperty("height")
-              private Notification height;
+              private double height;
       
                 /**
                * Creates a new Notification with all default parameters. This constructor is intended to be
@@ -100,13 +99,13 @@ public class Elastic{
          * @param height the height of the notification in pixels. If this is less than or
          */
         public Notification(NotificationLevel level, String title, String message, double displayTime, double width, double height) {
-            this.level = level;
-            this.title = title;
-            this.description = description;
-            this.displayTimeMillis = displayTimeMillis;
-            this.width = width;
-            this.height = height;
-      }
+          this.level = level;
+          this.title = title;
+          this.description = message; 
+          this.displayTimeMillis = displayTimeMillis;
+          this.width = width;
+          this.height = height;
+}
 
       /**
        * Creates a new Notification with the given parameters and default display time, width and height
@@ -116,7 +115,7 @@ public class Elastic{
        * @param message the description of the notification
        */
       public Notification (NotificationLevel level, String title, String description) {
-        this(level, title, description, 5.0, 0.0, 0.0);
+        this(level, title, description, 3000, 350, -1);
       }
 
       /**
