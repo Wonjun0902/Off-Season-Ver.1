@@ -58,7 +58,7 @@ public class Elastic{
             /**
              * Represents a notification to be sent to the Elastic Dashboard. This class is immutable and can be serialized to JSON string
              */
-            public static class Notification{
+  public static class Notification{
               @JsonProperty("level")
               private NotificationLevel level;
       
@@ -105,7 +105,7 @@ public class Elastic{
           this.displayTimeMillis = displayTimeMillis;
           this.width = width;
           this.height = height;
-}
+    }
 
       /**
        * Creates a new Notification with the given parameters and default display time, width and height
