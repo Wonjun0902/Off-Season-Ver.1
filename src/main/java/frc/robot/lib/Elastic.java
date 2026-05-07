@@ -88,6 +88,11 @@ public class Elastic{
         }
 
         /**
+         * this(Notification.INFO, title, message, 3000, 350, -1);
+         * This is a default constructor that calls the parameterized constructor with default values
+         */
+
+        /**
          * Creates a new Notification with the given parameters
          * 
          * @param level the {@link NotificationLevel} of the notification
