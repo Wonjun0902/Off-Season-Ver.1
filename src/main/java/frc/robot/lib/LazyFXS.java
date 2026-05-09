@@ -37,9 +37,14 @@ public class LazyFXS implements LazyCTRE {
         follower = new TalonFXS(followID, followCanbus);
         follower.getConfigurator().apply(followConfiguration);
         follower.setControl(new Follower(motor.getDeviceID(), followerInverted));
-
     }
-    
+
+    if(canCoderConfig != null){
+        canCoder = new CANcoder(canCoderID, canCoderCanBus);
+        canCoder.getConfigurator().apply(canCoderConfig);
+    }
+
+    if(motor.getIsProLicensed().getValue() == false) DriverStation.reportWarning("Motor" + motorID + "on Canbus" + motor.getNetwork(), false);
 
     }
 
