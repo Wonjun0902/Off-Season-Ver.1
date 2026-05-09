@@ -28,10 +28,17 @@ public class LazyFXS implements LazyCTRE {
     private boolean enableFOC = true;
 
     public LazyFXS(int motorID, String canBus, TalonFXSConfiguration configuration, int followID, String followCanbus, 
-        TalonFXSConfiguration followConfig, MotorAlignmentValue followerInverted, int canCoderID, 
+        TalonFXSConfiguration followConfiguration, MotorAlignmentValue followerInverted, int canCoderID, 
         String canCoderCanBus, CANcoderConfiguration canCoderConfig) {
     motor = new TalonFXS(motorID, canBus);
     motor.getConfigurator().apply(configuration);
+
+    if(followConfiguration != null){
+        follower = new TalonFXS(followID, followCanbus);
+        follower.getConfigurator().apply(followConfiguration);
+        follower.setControl(new Follower(motor.getDeviceID(), followerInverted));
+
+    }
     
 
     }
