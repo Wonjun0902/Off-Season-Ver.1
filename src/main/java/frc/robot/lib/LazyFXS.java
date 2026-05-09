@@ -45,7 +45,7 @@ public class LazyFXS implements LazyCTRE {
     }
 
     if(motor.getIsProLicensed().getValue() == false) DriverStation.reportWarning("Motor" + motorID + "on Canbus" + motor.getNetwork(), false);
-
+    BaseStatusSignal.setUpdateFrequencyForAll(250, motor.getPosition(),motor.getVelocity(), motor.getCurrent(), motor.getTemperature());
     }
 
 }
