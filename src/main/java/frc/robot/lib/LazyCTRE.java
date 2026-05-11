@@ -89,6 +89,11 @@ public interface LazyCTRE {
     void setBrake();
 
     /**
+     * Stops the Motor 
+     */
+    void stop();
+
+    /**
      * Enables FOC, increasing the peak power to 15%
      */
     void enableFOC();

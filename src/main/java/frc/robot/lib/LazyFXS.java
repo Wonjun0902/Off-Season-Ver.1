@@ -30,22 +30,134 @@ public class LazyFXS implements LazyCTRE {
     public LazyFXS(int motorID, String canBus, TalonFXSConfiguration configuration, int followID, String followCanbus, 
         TalonFXSConfiguration followConfiguration, MotorAlignmentValue followerInverted, int canCoderID, 
         String canCoderCanBus, CANcoderConfiguration canCoderConfig) {
-    motor = new TalonFXS(motorID, canBus);
-    motor.getConfigurator().apply(configuration);
+        motor = new TalonFXS(motorID, canBus);
+        motor.getConfigurator().apply(configuration);
 
-    if(followConfiguration != null){
-        follower = new TalonFXS(followID, followCanbus);
-        follower.getConfigurator().apply(followConfiguration);
-        follower.setControl(new Follower(motor.getDeviceID(), followerInverted));
+        if(followConfiguration != null){
+            follower = new TalonFXS(followID, followCanbus);
+            follower.getConfigurator().apply(followConfiguration);
+            follower.setControl(new Follower(motor.getDeviceID(), followerInverted));
+        }
+
+        if(canCoderConfig != null){
+            canCoder = new CANcoder(canCoderID, canCoderCanBus);
+            canCoder.getConfigurator().apply(canCoderConfig);
+        }
+
+        if(motor.getIsProLicensed().getValue() == false) {
+            DriverStation.reportWarning("Motor" + motorID + "on Canbus" + motor.getNetwork(), false);
+        }
+        BaseStatusSignal.setUpdateFrequencyForAll(250, motor.getPosition(),motor.getVelocity(), motor.getAcceleration(), motor.getStatorCurrent(), motor.getSupplyCurrent());
+        motor.optimizeBusUtilization();
+
+        for(int i = 0; i < 5; i++){
+            var error = motor.getConfigurator().apply(configuration);
+            if(error.isOK()){
+                break;
+            }
+            else{
+                DriverStation.reportWarning(
+                    "Warning: Your motor configuration on motor " + motor.getDeviceID() + "was not apploed" , false
+                );
+            }
+        }
+        motor.setNeutralMode(NeutralModeValue.Brake);
     }
 
-    if(canCoderConfig != null){
-        canCoder = new CANcoder(canCoderID, canCoderCanBus);
-        canCoder.getConfigurator().apply(canCoderConfig);
+    @Override
+    public void setMMPositionTarget(Angle setpoint, int slot) {
+        this.motor.setControl(new MotionMagicVoltage(setpoint).withEnableFOC(this.enableFOC).withSlot(slot));
     }
 
-    if(motor.getIsProLicensed().getValue() == false) DriverStation.reportWarning("Motor" + motorID + "on Canbus" + motor.getNetwork(), false);
-    BaseStatusSignal.setUpdateFrequencyForAll(250, motor.getPosition(),motor.getVelocity(), motor.getCurrent(), motor.getTemperature());
+    @Override
+    public void setMMExpoPositionTarget(Angle setpoint, int slot) {
+        this.motor.setControl(new MotionMagicExpoVoltage(setpoint).withEnableFOC(this.enableFOC).withSlot(slot));
+    }
+
+    @Override
+    public void setMMVelocityTarget(AngularVelocity setpoint, int slot) {
+        this.motor.setControl(new MotionMagicVelocityVoltage(setpoint).withEnableFOC(this.enableFOC).withSlot(slot));
+    }
+
+    @Override
+    public void setTFOCVelocityTarget(AngularVelocity velocity, Current feedforward, int slot) {
+        this.motor.setControl(new VelocityTorqueCurrentFOC(velocity).withFeedForward(feedforward).withSlot(slot));
+    }
+
+    @Override
+    public void setPIDPositionTarget(Angle setpoint, int slot) {
+        this.motor.setControl(new PositionVoltage(setpoint).withEnableFOC(this.enableFOC).withSlot(slot));
+    }
+
+    @Override
+    public void setPIDVelocityTarget(AngularVelocity setpoint, int slot) {
+        this.motor.setControl(new VelocityVoltage(setpoint).withEnableFOC(this.enableFOC).withSlot(slot));
+    }
+
+    @Override
+    public void setDutyCycle(double percent){
+        this.motor.set(percent);
+    }
+
+    @Override
+    public void setCoast(){
+        this.motor.setNeutralMode(NeutralModeValue.Coast);
+    }
+
+    @Override
+    public void setBrake(){
+        this.motor.setNeutralMode(NeutralModeValue.Brake);
+    }
+
+    @Override
+    public void enableFOC() {
+        this.enableFOC = true;
+    }
+
+    @Override
+    public void disableFOC() {
+        this.enableFOC = false;
+    }
+
+    @Override
+    public void stop() {
+        this.motor.stopMotor();
+    }
+
+    @Override
+    public Angle getPosition() {
+        return this.motor.getPosition().getValue();
+    }
+
+    @Override
+    public AngularVelocity getVelocity() {
+        return this.motor.getVelocity().getValue();
+    }
+
+    @Override 
+    public AngularAcceleration getAcceleration() {
+        return this.motor.getAcceleration().getValue();
+    }
+
+    @Override
+    public void updateTelemetry(MotorTelemetry telemetry) {
+        telemetry.position = this.getPosition();
+        telemetry.velocity = this.getVelocity();
+        telemetry.acceleration = this.getAcceleration();
+        telemetry.statorCurrent = this.motor.getStatorCurrent().getValue();
+        telemetry.supplyCurrent = this.motor.getSupplyCurrent().getValue();
+    }
+
+    public TalonFXS getMotor() {
+        return this.motor;
+    }
+
+    public TalonFXS getFollower() {
+        return this.follower;
+    }
+
+    public CANcoder getCanCoder() {
+        return this.canCoder;
     }
 
 }
