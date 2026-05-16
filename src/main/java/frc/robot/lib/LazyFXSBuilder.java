@@ -22,12 +22,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 public class LazyFXSBuilder implements LazyCTREBuilder<TalonFXS, ExternalFeedbackSensorSourceValue> {
-    private MotorArrangementValue motorArrangementValue;
+    private MotorArrangementValue motorArrangement;
     private int motorID, followID, canCoderID;
     private String canBus = "", followCanbus = "", canCoderCanBus = "";
 
-    private TalonFXSConfiguration motor = null, follower = null;
-    private CANcoderConfiguration canCoder = null;
+    private TalonFXSConfiguration motorConfiguration = null, followerConfiguration = null;
+    private CANcoderConfiguration canCoderConfiguration = null;
 
     private MotorAlignmentValue follwerInverted;
 
@@ -55,15 +55,52 @@ public class LazyFXSBuilder implements LazyCTREBuilder<TalonFXS, ExternalFeedbac
         this.canBus = canBus;
 
         motorConfiguration = new TalonFXSConfiguration();
-        motorConfiguration.MotorSensorPositionCoefficient = sensorToMechanismRatio;
-        this.motorArrangementValue = motorArrangement;
-        motorConfiguration.ExternalFeedback.sensorToMechanismRatio = sensorToMechanismRatio;
+        motorConfiguration.Commutation.MotorArrangement = motorArrangement;
+        this.motorArrangement = motorArrangement;
+        motorConfiguration.ExternalFeedback.SensorToMechanismRatio = sensorToMechanismRatio;
         motorConfiguration.MotorOutput.Inverted = invertedValue;
 
         motorConfiguration.CurrentLimits.StatorCurrentLimit = statorCurrentLimit;
-        motorConfiguration.CurrentLimits.supplyCurrentLimit = supplyCurrentLimit;
-        motorConfiguration.CurrentLimits.Inverted = 0.0;
+        motorConfiguration.CurrentLimits.SupplyCurrentLimit = supplyCurrentLimit;
+        motorConfiguration.CurrentLimits.SupplyCurrentLowerTime = 0.0;
 
+        motorConfiguration.ClosedLoopGeneral.ContinuousWrap = false;
+        motorConfiguration.Commutation.AdvancedHallSupport = AdvancedHallSupportValue.Enabled;
+
+        motorConfiguration.Audio.AllowMusicDurDisable = true;
+    }
+
+    public LazyFXSBuilder withRotorToSensorRatio(double rotorToSensorRatio){
+        motorConfiguration.ExternalFeedback.RotorToSensorRatio = rotorToSensorRatio;
+        return this;
+    }
+
+    @Override
+    public LazyFXSBuilder withFollower(int followerID, String canBus, MotorAlignmentValue isInverted){
+        this.followID = followerID;
+        this.canBus = canBus;
+        this.follwerInverted = isInverted;
+
+        followerConfiguration = new TalonFXSConfiguration();
+        followerConfiguration.Commutation.MotorArrangement = this.motorArrangement;
+
+        return this;
+    }
+
+    @Override
+    public LazyFXSBuilder withCANCoder(int CANcoderID, String canCoderCanBus, 
+            ExternalFeedbackSensorSourceValue sensorType, double magnetOffset,
+            SensorDirectionValue sensorDirection){
         
+        this.canCoderID = CANcoderID;
+        this.canCoderCanBus = canCoderCanBus;
+        
+        canCoderConfiguration = new CANcoderConfiguration();
+        canCoderConfiguration.MagnetSensor.MagnetOffset = magnetOffset;
+        canCoderConfiguration.MagnetSensor.SensorDirection = sensorDirection;
+        motorConfiguration.ExternalFeedback.FeedbackRemoteSensorID = CANcoderID;
+        motorConfiguration.ExternalFeedback.ExternalFeedbackSensorSource = sensorType;
+
+        return this;
     }
 }
