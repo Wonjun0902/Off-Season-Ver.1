@@ -88,19 +88,36 @@ public class LazyFXSBuilder implements LazyCTREBuilder<TalonFXS, ExternalFeedbac
     }
 
     @Override
-    public LazyFXSBuilder withCANCoder(int CANcoderID, String canCoderCanBus, 
-            ExternalFeedbackSensorSourceValue sensorType, double magnetOffset,
-            SensorDirectionValue sensorDirection){
-        
-        this.canCoderID = CANcoderID;
-        this.canCoderCanBus = canCoderCanBus;
-        
+    public LazyFXSBuilder withCANCoder(int CANCoderID, String canCoderBus,
+            ExternalFeedbackSensorSourceValue sensorType,
+            double magnetOffset,
+        SensorDirectionValue sensorDirection) {
+
+        this.canCoderID = CANCoderID;
+        this.canCoderCanBus = canCoderBus;
+
         canCoderConfiguration = new CANcoderConfiguration();
         canCoderConfiguration.MagnetSensor.MagnetOffset = magnetOffset;
-        canCoderConfiguration.MagnetSensor.SensorDirection = sensorDirection;
-        motorConfiguration.ExternalFeedback.FeedbackRemoteSensorID = CANcoderID;
+        motorConfiguration.ExternalFeedback.FeedbackRemoteSensorID = CANCoderID;
         motorConfiguration.ExternalFeedback.ExternalFeedbackSensorSource = sensorType;
+        canCoderConfiguration.MagnetSensor.SensorDirection = sensorDirection;
 
         return this;
     }
+
+    @Override
+    public LazyFXSBuilder withCANCoder(int CANCoderID, String canCoderCanBus,
+            ExternalFeedbackSensorSourceValue sensorType,
+            double magnetOffset,
+            SensorDirectionValue sensorDirection, double discontinuityPoint, double rotorToSensorRatio) {
+        withCANCoder(CANCoderID, canCoderCanBus, sensorType, magnetOffset, sensorDirection);
+
+        canCoderConfiguration.MagnetSensor.AbsoluteSensorDiscontinuityPoint = discontinuityPoint;
+
+        motorConfiguration.ExternalFeedback.RotorToSensorRatio = rotorToSensorRatio;
+
+        return this;
+    }
+
+
 }
