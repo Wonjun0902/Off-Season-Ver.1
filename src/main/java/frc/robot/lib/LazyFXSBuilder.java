@@ -3,6 +3,8 @@ package frc.robot.lib;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 
+import org.ejml.dense.row.factory.LinearSolverFactory_ZDRM;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.ParentConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
@@ -119,5 +121,116 @@ public class LazyFXSBuilder implements LazyCTREBuilder<TalonFXS, ExternalFeedbac
         return this;
     }
 
+    @Override
+    public LazyFXSBuilder withPIDFConfiguration(double p, double i, double d, double s, double g, double v, double a,
+            GravityTypeValue gravityType, StaticFeedforwardSignValue staticSignValue, int slotNumber) {
+        switch (slotNumber) {
+            case 0:
+                motorConfiguration.Slot0.kP = p;
+                motorConfiguration.Slot0.kI = i;
+                motorConfiguration.Slot0.kD = d;
+                motorConfiguration.Slot0.kS = s;
+                motorConfiguration.Slot0.kG = g;
+                motorConfiguration.Slot0.kV = v;
+                motorConfiguration.Slot0.kA = a;
+                motorConfiguration.Slot0.GravityType = gravityType;
+                motorConfiguration.Slot0.StaticFeedforwardSign = staticSignValue;
+                break;
+            case 1:
+                motorConfiguration.Slot1.kP = p;
+                motorConfiguration.Slot1.kI = i;
+                motorConfiguration.Slot1.kD = d;
+                motorConfiguration.Slot1.kS = s;
+                motorConfiguration.Slot1.kG = g;
+                motorConfiguration.Slot1.kV = v;
+                motorConfiguration.Slot1.kA = a;
+                motorConfiguration.Slot1.GravityType = gravityType;
+                motorConfiguration.Slot1.StaticFeedforwardSign = staticSignValue;
+                break;
+            case 2:
+                motorConfiguration.Slot2.kP = p;
+                motorConfiguration.Slot2.kI = i;
+                motorConfiguration.Slot2.kD = d;
+                motorConfiguration.Slot2.kS = s;
+                motorConfiguration.Slot2.kG = g;
+                motorConfiguration.Slot2.kV = v;
+                motorConfiguration.Slot2.kA = a;
+                motorConfiguration.Slot2.GravityType = gravityType;
+                motorConfiguration.Slot2.StaticFeedforwardSign = staticSignValue;
+                break;
+            default:
+                DriverStation.reportWarning("PDF Slot number is invalid for device ID: " + motorID, true);
+        }
 
+        return this;
+    }
+
+    @Override
+    public LazyFXSBuilder withMotionMagicConfiguration(double expoV, double expoA, AngularVelocity cruiseVelocity,
+        AngularAcceleration maxAcceleration){
+            motorConfiguration.MotionMagic.MotionMagicCruiseVelocity = cruiseVelocity.in(RotationsPerSecond);
+            motorConfiguration.MotionMagic.MotionMagicAcceleration = maxAcceleration.in(RotationsPerSecondPerSecond);
+
+            motorConfiguration.MotionMagic.MotionMagicExpo_kV = expoV;
+            motorConfiguration.MotionMagic.MotionMagicExpo_kA = expoA;
+
+            return this;
+        }
+
+    @Override
+    public LazyFXSBuilder withMotionMagicConfiguration(double expoV, double expoA, AngularVelocity cruiseVelocity, 
+        AngularAcceleration maxAcceleration, double jerk){
+            withMotionMagicConfiguration(expoV, expoA, cruiseVelocity, maxAcceleration);
+            motorConfiguration.MotionMagic.MotionMagicJerk = jerk;
+
+            return this;
+    }
+
+    @Override
+    public LazyFXSBuilder withCustomConfiguration(ParentConfiguration configuration){
+        motorConfiguration = (TalonFXSConfiguration)configuration;
+
+        return this;
+    }
+
+    @Override
+    public LazyFXSBuilder withLimitSwitch(boolean forwardLimitEnabled, boolean forwardLimitAutosetPositionEnabled, 
+        double forwardLimitAutosetPositionValue, boolean reverseLimitEnabled, boolean reverseLimitAutosetPositionEnabled, 
+        double reverseLimitAutosetPositionValue){
+            motorConfiguration.HardwareLimitSwitch.ForwardLimitEnable = forwardLimitEnabled;
+            motorConfiguration.HardwareLimitSwitch.ForwardLimitAutosetPositionEnable = forwardLimitAutosetPositionEnabled;
+            motorConfiguration.HardwareLimitSwitch.ForwardLimitAutosetPositionValue = forwardLimitAutosetPositionValue;
+
+            motorConfiguration.HardwareLimitSwitch.ReverseLimitEnable = reverseLimitEnabled;
+            motorConfiguration.HardwareLimitSwitch.ReverseLimitAutosetPositionEnable = reverseLimitAutosetPositionEnabled;
+            motorConfiguration.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = forwardLimitAutosetPositionValue;
+
+            return this;
+        }
+
+    @Override
+    public LazyFXSBuilder withSoftLimits(boolean forwardSoftLimitEnabled, double forwardSoftLimit, 
+        boolean reverseSoftLimitEnabled, double reverseSoftLimit){
+            motorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = forwardSoftLimitEnabled;
+            motorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = forwardSoftLimit;   
+
+            motorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = reverseSoftLimitEnabled;
+            motorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = reverseSoftLimit;
+
+            return this;
+        }
+
+    @Override
+    public TalonFXSConfiguration getConfiguration(){
+        return motorConfiguration;
+    }
+
+    @Override
+    public LazyFXS build(){
+        LazyFXS motor = new LazyFXS(motorID, canBus, motorConfiguration, followID, followCanbus, followerConfiguration, 
+            follwerInverted, canCoderID, canCoderCanBus, canCoderConfiguration);
+        motor.setBrake();
+
+        return motor;
+    }
 }
