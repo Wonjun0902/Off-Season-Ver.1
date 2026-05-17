@@ -1,6 +1,7 @@
 package frc.robot.lib;
 
 import com.ctre.phoenix6.configs.ParentConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -22,38 +23,35 @@ public interface LazyCTREBuilder<T, S> {
     public LazyCTREBuilder<T, S> withFollower(int followerID, String canBus, MotorAlignmentValue alignmentValue);
 
     /**
-     * Configures a {@link CANCoder} remote feedback sensor 
-     * 
-     * @param CANCoderID the motor ID of the remote sensor to configure
-     * @param canBus the CAN bus of the remote sensor to configure
-     * @param sensorType the type of remote sensor to configure
-     * @param magnetOffset the magnet offset of the remote sensor to configure
-     * @param sensorDirection the sensor direction of the remote sensor to configure
-     * 
-     * @return this motor instance for method chaining
-     */
-    public LazyCTREBuilder<T, S> withCANCoder(int CANCoderID, String canBus, S sensorType, 
-                                            SensorDirectionValue sensorDirection, 
-                                            double magnetOffset);
+         * Configures a {@link CANcoder} remote feedback sensor
+         *
+         * @param CANCoderID      the device ID of the CANcoder
+         * @param canCoderCanBus  the CAN bus name the CANcoder is on
+         * @param sensorType      the type of feedback the CANcoder will supply
+         * @param magnetOffset    the digital magnet offset applied to the sensor
+         * @param sensorDirection the sensor direciton relative to the mechanism
+         * @return this motor instance for method chaining
+         */
+        public LazyCTREBuilder<T, S> withCANCoder(int CANCoderID, String canCoderCanBus, S sensorType,
+                        double magnetOffset,
+                        SensorDirectionValue sensorDirection);
 
-    /**
-     * Configures a {@link CANCoder} remote feedback sensor as a secondary sensor
-     * 
-     * @param CANCoderID the motor ID of the remote sensor to configure
-     * @param canBus the CAN bus of the remote sensor to configure
-     * @param sensorType the type of remote sensor to configure
-     * @param magnetOffset the magnet offset of the remote sensor to configure
-     * @param sensorDirection the sensor direction of the remote sensor to configure
-     * @param discontinuityPoint the point of discontinuity for the sensor
-     * @param rotorToSensorRatio the gear ratio of the rotor to the sensor
-     * 
-     * @return this motor instance for method chaining 
-     */
-    public LazyCTREBuilder<T, S> withSecondaryCANCoder(int CANCoderID, String canBus, S sensorType, 
-                                            SensorDirectionValue sensorDirection, 
-                                            double magnetOffset, 
-                                            double discontinuityPoint, 
-                                            double rotorToSensorRatio);
+   /**
+         * Configures a {@link CANcoder} remote feedback sensor with a specified rotor
+         * to sensor ratio and discontinuity point
+         *
+         * @param CANCoderID         the device ID of the CANcoder
+         * @param canCoderCanBus     the CAN bus name the CANcoder is on
+         * @param sensorType         the type of feedback the CANcoder will supply
+         * @param magnetOffset       the digital magnet offset applied to the sensor
+         * @param sensorDirection    the sensor direciton relative to the mechanism
+         * @param discontinuityPoint the point of discontinuity for the sensor
+         * @param rotorToSensorRatio the gear ratio of the sensor to the motor
+         * @return this motor instance for method chaining
+         */
+        public LazyCTREBuilder<T, S> withCANCoder(int CANCoderID, String canCoderCanBus, S sensorType,
+                        double magnetOffset,
+                        SensorDirectionValue sensorDirection, double discontinuityPoint, double rotorToSensorRatio);
 
     /**
      * Configures the PID gains and feedforward for a specific slot
