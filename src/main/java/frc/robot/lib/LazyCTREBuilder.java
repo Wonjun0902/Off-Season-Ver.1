@@ -80,33 +80,33 @@ public interface LazyCTREBuilder<T, S> {
 
 
     /**
-     * Configures the motion magic parameters for this motor's Motion Magic control mode
-     * 
-     * @param expoV the motion magic expo voltage to configure (lower values result in more aggressive velocity feedforward profile)
-     * @param expoA the motion magic expo acceleration to configure (lower values result in more aggressive acceleration feedforward profile)
-     * @param cruiseVelocity the motion magic cruise velocity to configure
-     * @param maxAcceleration the motion magic acceleration to configure
-     * 
-     * @return this motor instance for method chaining
-     */
-    public LazyCTREBuilder<T, S> withMotionMagicCongifurations(double expoV, double expoA, 
-                            AngularVelocity cruiseVelocity, 
-                            AngularAcceleration maxAcceleration);
+         * Configures the motion magic parameters for this motor's motion prifiling
+         *
+         * @param expoV           the motionmagic expo velocity gain (lower values will result in more aggressive velocity feed forward)
+         * @param expoA           the motionmagic expo acceleration gain (lower values will result in more aggressive acceleration feed forward)
+         * @param cruiseVelocity  the maximum velocity of the mechanism 
+         * @param maxAcceleration the maximum acceleration of the mechanism in
+         *                        rotations/s^2
+         * @return this motor instance for method chaining
+         */
+        public LazyCTREBuilder<T, S> withMotionMagicConfiguration(double expoV, double expoA,
+                        AngularVelocity cruiseVelocity,
+                        AngularAcceleration maxAcceleration);
 
-     /**
-     * Configures the motion magic parameters for this motor's Motion Magic control mode
-     * 
-     * @param expoV the motion magic expo voltage to configure (lower values result in more aggressive velocity feedforward profile)
-     * @param expoA the motion magic expo acceleration to configure (lower values result in more aggressive acceleration feedforward profile)
-     * @param cruiseVelocity the motion magic cruise velocity to configure
-     * @param maxAcceleration the motion magic acceleration to configure
-     * @param jerk the motion magic jerk to configure (lower values result in more aggressive acceleration feedforward profile)
-     * 
-     * @return this motor instance for method chaining
-     */
-    public LazyCTREBuilder<T, S> withMotionMagicCongifurations(double expoV, double expoA, 
-                            AngularVelocity cruiseVelocity, 
-                            AngularAcceleration maxAcceleration, double jerk);
+        /**
+         * Configures the motion magic parameters for this motor's motion prifiling
+         *
+         * @param expoV           the motionmagic expo velocity gain (lower values will result in more aggressive velocity feed forward)
+         * @param expoA           the motionmagic expo acceleration gain (lower values will result in more aggressive acceleration feed forward)
+         * @param cruiseVelocity  the maximum velocity of the mechanism 
+         * @param maxAcceleration the maximum acceleration of the mechanism
+         * @param jerk            the maximum jerk of the mechanism in rotations/s^3
+         * @return this motor instance for method chaining
+         */
+        public LazyCTREBuilder<T, S> withMotionMagicConfiguration(double expoV, double expoA,
+                        AngularVelocity cruiseVelocity,
+                        AngularAcceleration maxAcceleration, double jerk);
+
 
 
     /**
@@ -124,7 +124,7 @@ public interface LazyCTREBuilder<T, S> {
      *                                           to the reverse limit switch offset when the reverse limit switch is triggered
      * @param reverseLimitAutosetPositionValue   the position of the encoder when the limit switch is triggered, if reverseLimitAutosetPositionEnabled is true
      */
-    public LazyCTREBuilder<T, S> withLimitSwitches (
+    public LazyCTREBuilder<T, S> withLimitSwitch (
         boolean forwardLimitEnabled, boolean forwardLimitAutosetPositionEnabled, double forwardLimitAutosetPositionValue,
         boolean reverseLimitEnabled, boolean reverseLimitAutosetPositionEnabled, double reverseLimitAutosetPositionValue);
 
