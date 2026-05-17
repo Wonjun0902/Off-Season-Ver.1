@@ -54,31 +54,30 @@ public interface LazyCTREBuilder<T, S> {
                         SensorDirectionValue sensorDirection, double discontinuityPoint, double rotorToSensorRatio);
 
     /**
-     * Configures the PID gains and feedforward for a specific slot
-     * 
-     * @param p the proportional gain to configure
-     * @param i the integral gain to configure
-     * @param d the derivative gain to configure
-     * 
-     * @param s the static feedforward to configure
-     * 
-     * @param v the velocity feedforward to configure
-     * 
-     * @param a the acceleration feedforward to configure
-     * 
-     * @param g the gravity feedforward to configure
-     * 
-     * @param gravityType the type of gravity feedforward to configure
-     * @param staticSignValue the sign of the static feedforward to configure
-     * 
-     * @param slot the slot to configure the gains and feedforward on
-     * 
-     * @return this motor instance for method chaining
-     */
-    public LazyCTREBuilder<T, S> withPIDGainsAndFeedforward(double p, double i, double d, 
-                                                            double s, double v, double a, double g, 
-                                                            GravityTypeValue gravityType, StaticFeedforwardSignValue staticSignValue,
-                                                            int slot);
+         * Configures the PID and Feedforward gains for this motor
+         * 
+         * @param p               the proportional gain
+         * @param i               the integral gain
+         * @param d               the derivative gain
+         * @param s               the static friction feed forward (voltage reqiured to
+         *                        overcome static friction)
+         * @param g               the gravity feed forward (voltage required to overcome
+         *                        gravity)
+         * @param v               the velocity feed forward (voltage required to
+         *                        maintain a 1 rotation/s angular velocity in mechanism
+         *                        rotations)
+         * @param a               the velocity feed forward (voltage required to
+         *                        maintain a 1 rotation/s^2 angular acceleration in
+         *                        mechanism rotations)
+         * @param gravityType     what type of gravity feed forward to use
+         * @param staticSignValue the sign of the static friction feed forward
+         * @param slotNumber      the slot number to use for the PIDF gains
+         * @return this motor instance for method chaining
+         */
+        public LazyCTREBuilder<T, S> withPIDFConfiguration(double p, double i, double d, double s, double g, double v,
+                        double a, GravityTypeValue gravityType, StaticFeedforwardSignValue staticSignValue,
+                        int slotNumber);
+
 
     /**
      * Configures the motion magic parameters for this motor's Motion Magic control mode
