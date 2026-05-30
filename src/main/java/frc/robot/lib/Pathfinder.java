@@ -7,8 +7,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.swerve.Swerve;
-import frc.robot.subsystems.swerve.TunerConstants;
+import frc.robot.subsystems.Swerve.Swerve;
+import frc.robot.subsystems.Swerve.TunerConstants;
 
 import java.util.OptionalDouble;
 import static edu.wpi.first.units.Units.MetersPerSecond;

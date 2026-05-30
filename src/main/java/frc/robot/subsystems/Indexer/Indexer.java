@@ -16,14 +16,9 @@ import static frc.robot.subsystems.Indexer.IndexerConstants.*;
 public class Indexer extends SubsystemBase {
     private IndexerIO io;
 
+    public Indexer(IndexerIO io) {
+        this.io = io;
 
-
-
-
-
-
-
-
-
-
+        
+    }
 }
