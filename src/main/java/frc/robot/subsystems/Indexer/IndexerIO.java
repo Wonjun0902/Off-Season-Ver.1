@@ -6,8 +6,8 @@ import edu.wpi.first.units.measure.Distance;
 
 public interface IndexerIO {
 
-    public void pidSpeedLeft(double speed);
-    public void pidSpeedRight(double speed);
+    public void spinSpeedLeft(AngularVelocity speed);
+    public void spinSpeedRight(AngularVelocity speed);
 
     public void Stop();
 
@@ -20,8 +20,8 @@ public interface IndexerIO {
     public Current getLeftCurrent();
     public Current getRightCurrent();
 
-    public Distance getLeftPosition();
-    public Distance getRightPosition();
+    public Distance getLeftRange();
+    public Distance getRightRange();
 
     public void periodic();
 }
