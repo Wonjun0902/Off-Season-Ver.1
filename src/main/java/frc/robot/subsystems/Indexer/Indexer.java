@@ -77,5 +77,54 @@ public class Indexer extends SubsystemBase {
         return Commands.parallel(leftLogic, rightLogic).repeatedly().finallyDo(() -> io.Stop());
     }
 
-    
-}   
+    public Command Stop(){
+        return runOnce(() -> io.Stop());
+    }
+
+    public Command feedForTime(double seconds){
+        return run(() -> {
+            io.spinSpeedLeft(FEED_SPEED_LEFT);
+            io.spinSpeedRight(FEED_SPEED_RIGHT);
+        }).withTimeout(seconds);
+    }
+
+    public Command outFeedForTime(double seconds){
+        return run(() -> {
+            io.spinSpeedLeft(FEED_SPEED_LEFT.times(-1));
+            io.spinSpeedRight(FEED_SPEED_RIGHT.times(-1));
+        }).withTimeout(seconds);
+    }   
+
+    public Command feedWithUnjamForTime(double seconds){
+        Command unjamLeft = run(() -> 
+            io.spinSpeedLeft(UNJAMMED_SPEED)
+        ).until(() -> !LeftIsJammed.getAsBoolean());
+
+        Command unjamRight = run(() -> 
+            io.spinSpeedRight(UNJAMMED_SPEED)
+        ).until(() -> !RightIsJammed.getAsBoolean());
+
+        Command feedleft = run(() -> 
+            io.spinSpeedLeft(FEED_SPEED_LEFT));
+
+        Command feedRight = run(() -> 
+            io.spinSpeedRight(FEED_SPEED_RIGHT));
+
+        //LEFT UNJAM & FEED LOGIC
+        Command leftLogic = Commands.either(unjamLeft, feedleft, debouncedLeft);
+
+        //RIGHT UNJAM & FEED LOGIC
+        Command rightLogic = Commands.either(unjamRight, feedRight, debouncedRight);
+
+        return Commands.parallel(leftLogic, rightLogic).withTimeout(seconds).finallyDo(() -> io.Stop());
+    }
+
+    @Override
+    public void periodic() {
+        io.periodic();
+
+        SmartDashboard.putBoolean("Left Jammed", LeftIsJammed.getAsBoolean());
+        SmartDashboard.putBoolean("Right Jammed", RightIsJammed.getAsBoolean());
+        SmartDashboard.putString("Mr. Patel's Favorite Color", "Green");
+    }
+}
