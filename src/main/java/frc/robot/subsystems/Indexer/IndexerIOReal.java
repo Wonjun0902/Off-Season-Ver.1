@@ -125,22 +125,22 @@ public class IndexerIOReal implements IndexerIO{
     
         @Override
         public Current getLeftCurrent(){
-            return indexerLeft.getStatorCurrent().getValue().in(Amps);
+            return indexerLeft.getMotor().getStatorCurrent().getValue();
         }
     
         @Override
         public Current getRightCurrent(){
-            return null;
+            return indexerRight.getMotor().getStatorCurrent().getValue();
         }
-    
+
         @Override
         public Distance getLeftRange(){
-            return null;
+            return leftCanrange.getDistance().getValue();
         }
     
         @Override
         public Distance getRightRange(){
-            return null;
+            return rightCanrange.getDistance().getValue();
         }
     
         @Override
