@@ -21,16 +21,23 @@ public class IndexerConstants {
     public static final AngularVelocity FEED_SPEED_LEFT = RotationsPerSecond.of(0.0); //Placeholder, will need to be tuned
     public static final AngularVelocity FEED_SPEED_RIGHT = RotationsPerSecond.of(0.0); //Placeholder, will need to be tuned
 
+    public static final double STATOR_LIMIT = 0.0; //Placeholder, will need to be tuned
+    public static final double SUPPLY_LIMIT = 0.0; //Placeholder, will need to be tuned
+
     public class Configurations{
         public static String CANBUS = "MR.PATEL";
 
-        public class Left{
+        public class Spindexer{
+             public class Left{
             //TODO: Tune all of these values, cause all of these are placeholders.
-            public static final double MOTOR_ID = 0;
-            public static final boolean MOTOR_INVERTED = false; 
-            public static final double SENSOR_TO_MECH_RATIO = 1.0;
+                public static final int MOTOR_ID = 0;
+                public static final boolean MOTOR_INVERTED = false; 
+                public static final double SENSOR_TO_MECH_RATIO = 1.0;
 
-            public static final double kP = 0.0;
+                public static final Current STATOR_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
+                public static final Current SUPPLY_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
+
+                public static final double kP = 0.0;
                 public static final double kI = 0.0;
                 public static final double kD = 0.0;
 
@@ -38,8 +45,6 @@ public class IndexerConstants {
                 public static final double kG = 0.0;
                 public static final double kV = 0.0; 
                 public static final double kA = 0.0;
-
-                public static final Current CURRENT_FF = Amps.of(9.0);
 
                 public static final double EXPO_A = 0.0;
                 public static final double EXPO_V = 0.0;
@@ -48,13 +53,16 @@ public class IndexerConstants {
                 public static final double MAX_ACCELERATION = 160.0;
         }
 
-        public class Right{
-            //TODO: Tune all of these values, cause all of these are placeholders.
-            public static final double MOTOR_ID = 0; 
-            public static final boolean MOTOR_INVERTED = false; 
-            public static final double SENSOR_TO_MECH_RATIO = 1.0; 
+            public class Right{
+                //TODO: Tune all of these values, cause all of these are placeholders.
+                public static final int MOTOR_ID = 0; 
+                public static final boolean MOTOR_INVERTED = false; 
+                public static final double SENSOR_TO_MECH_RATIO = 1.0; 
 
-            public static final double kP = 0.0;
+                public static final Current STATOR_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
+                public static final Current SUPPLY_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
+
+                public static final double kP = 0.0;
                 public static final double kI = 0.0;
                 public static final double kD = 0.0;
 
@@ -62,19 +70,18 @@ public class IndexerConstants {
                 public static final double kG = 0.0;
                 public static final double kV = 0.0; 
                 public static final double kA = 0.0;
-
-                public static final Current CURRENT_FF = Amps.of(9.0);
-
+                
                 public static final double EXPO_A = 0.0;
                 public static final double EXPO_V = 0.0;
 
                 public static final double CRUISE_VELOCITY = 80.0;
                 public static final double MAX_ACCELERATION = 160.0;
+        }
         }
 
         public class Canranges{
-            public static final double LEFT_CANRANGE_ID = 0.0;
-            public static final double RIGHT_CANRANGE_ID = 0.0;
+            public static final int LEFT_CANRANGE_ID = 0; //Change later
+            public static final int RIGHT_CANRANGE_ID = 0; //Change later
         }
     }
 }

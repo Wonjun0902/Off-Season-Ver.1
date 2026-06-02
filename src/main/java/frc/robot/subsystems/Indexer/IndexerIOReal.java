@@ -22,11 +22,128 @@ import frc.robot.lib.LazyTalonBuilder;
 
 public class IndexerIOReal implements IndexerIO{
 
-    public LazyTalon indexerLeft, indexerRight;
+    public LazyTalon indexerLeft;
+    public LazyTalon indexerRight;
     public CANrange leftCanrange, rightCanrange;
     
     public IndexerIOReal(){
         indexerLeft = new LazyTalonBuilder(
-            0, 0, null, 0, 0);
+            Spindexer.Left.MOTOR_ID, 
+            CANBUS,
+            Spindexer.Left.SENSOR_TO_MECH_RATIO, 
+            InvertedValue.CounterClockwise_Positive, 
+            Spindexer.Left.STATOR_LIMIT.in(Amps),
+            Spindexer.Left.SUPPLY_LIMIT.in(Amps))
+            .withPIDFConfiguration(
+                Spindexer.Left.kP,
+                Spindexer.Left.kI,
+                Spindexer.Left.kD,
+                Spindexer.Left.kS,
+                Spindexer.Left.kG,
+                Spindexer.Left.kV,
+                Spindexer.Left.kA,
+                GravityTypeValue.Elevator_Static,
+                StaticFeedforwardSignValue.UseClosedLoopSign,
+                0)
+            .build(); 
+        indexerLeft.setCoast(); // Remember this was set to Coast mode, not brake mode
+
+        indexerRight = new LazyTalonBuilder(
+            Spindexer.Right.MOTOR_ID, 
+            CANBUS,
+            Spindexer.Right.SENSOR_TO_MECH_RATIO, 
+            InvertedValue.CounterClockwise_Positive, 
+            Spindexer.Right.STATOR_LIMIT.in(Amps),
+            Spindexer.Right.SUPPLY_LIMIT.in(Amps))
+            .withPIDFConfiguration(
+                Spindexer.Right.kP,
+                Spindexer.Right.kI,
+                Spindexer.Right.kD,
+                Spindexer.Right.kS,
+                Spindexer.Right.kG,
+                Spindexer.Right.kV,
+                Spindexer.Right.kA,
+                GravityTypeValue.Elevator_Static,
+                StaticFeedforwardSignValue.UseClosedLoopSign,
+                0)
+            .build();
+
+        leftCanrange = new CANrange(Canranges.LEFT_CANRANGE_ID, CANBUS);
+        rightCanrange = new CANrange(Canranges.RIGHT_CANRANGE_ID, CANBUS);
+
+        CANrangeConfiguration canConfig = new CANrangeConfiguration()
+                .withFovParams(
+                    new FovParamsConfigs()
+                    .withFOVCenterX(0.0) // Placeholder, will need to be tuned
+                    .withFOVCenterY(0.0) // Placeholder, will need to be tuned
+                    .withFOVRangeX(0.0) // Placeholder, will need to be tuned
+                    .withFOVRangeY(0.0) // Placeholder, will need to be tuned
+                )
+                .withProximityParams(
+                    new ProximityParamsConfigs()
+                    .withMinSignalStrengthForValidMeasurement(0.0) // Placeholder, will need to be tuned
+                );
+                rightCanrange.getConfigurator().apply(canConfig);
+                leftCanrange.getConfigurator().apply(canConfig);
+        }
+    
+        @Override
+        public void spinSpeedLeft(AngularVelocity speed){
+            indexerLeft.setMMVelocityTarget(speed, 0); //Change if the motor is not MotionMagic
+        }
+    
+        @Override
+        public void spinSpeedRight(AngularVelocity speed){
+            indexerRight.setMMVelocityTarget(speed, 0); //Change if the motor is not MotionMagic
+        }
+    
+        @Override
+        public void Stop(){
+            indexerLeft.stop();
+            indexerRight.stop();
+        }
+    
+        @Override
+        public void runDutyCycleRight(double dutyCycle){
+            indexerRight.setDutyCycle(dutyCycle);
+        }
+    
+        @Override
+        public void runDutyCycleLeft(double dutyCycle){
+            indexerLeft.setDutyCycle(dutyCycle);
+        }
+    
+        @Override
+        public AngularVelocity getLeftSpeed(){
+            return indexerLeft.getVelocity();
+        }
+    
+        @Override
+        public AngularVelocity getRightSpeed(){
+            return indexerRight.getVelocity();
+        }
+    
+        @Override
+        public Current getLeftCurrent(){
+            return indexerLeft.getStatorCurrent().getValue().in(Amps);
+        }
+    
+        @Override
+        public Current getRightCurrent(){
+            return null;
+        }
+    
+        @Override
+        public Distance getLeftRange(){
+            return null;
+        }
+    
+        @Override
+        public Distance getRightRange(){
+            return null;
+        }
+    
+        @Override
+        public void periodic(){
+        }
     }
-}
