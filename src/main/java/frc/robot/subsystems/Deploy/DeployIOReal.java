@@ -54,7 +54,7 @@ public class DeployIOReal {
             Deployer.MAX_ACCELERATION
         )
         .withCANCoder(
-            CANCODER_ID, CANBUS, null, 0, null)
+            Deploy.CANCODER_ID, CANBUS, null, 0, null)
         .build();
 
         deployEncoder = new CANcoder(0, CANBUS);
