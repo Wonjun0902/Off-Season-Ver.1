@@ -31,7 +31,6 @@ public class IndexerConstants {
              public class Left{
             //TODO: Tune all of these values, cause all of these are placeholders.
                 public static final int MOTOR_ID = 0;
-                public static final boolean MOTOR_INVERTED = false; 
                 public static final double SENSOR_TO_MECH_RATIO = 1.0;
 
                 public static final Current STATOR_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
@@ -56,7 +55,6 @@ public class IndexerConstants {
             public class Right{
                 //TODO: Tune all of these values, cause all of these are placeholders.
                 public static final int MOTOR_ID = 0; 
-                public static final boolean MOTOR_INVERTED = false; 
                 public static final double SENSOR_TO_MECH_RATIO = 1.0; 
 
                 public static final Current STATOR_LIMIT = Amps.of(30.0); //Placeholder, will need to be tuned
