@@ -8,8 +8,7 @@ import edu.wpi.first.units.measure.Time;
 
 public interface DeployIO {
 
-    public void deploy(Angle position);
-    public void retract(Angle position);
+    public void moveTo(Angle position);
 
     public void moveToM1(Angle position);
     public void moveToM2(Angle position);

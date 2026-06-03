@@ -10,12 +10,16 @@ public class DeployConstants {
 
     public static final AngularVelocity DEPOLY_SPEED = RotationsPerSecond.of(0.5); 
 
+    public static final Angle FORWARD_LIMIT = Rotations.of(0.0);
+    public static final Angle REVERSE_LIMIT = Rotations.of(0.0);
+
     public class Configurations{
         public static String CANBUS = "Kingstone";
 
         public class Deployer{
                 public static final int MOTOR_ID = 0; //not correct value! 
                 public static final double GEAR_RATIO = 1.0; //not correct value!
+                public static final double ROTOR_TO_SENSOR_RATIO = 40.0 / 18.0 * 45.0; 
 
                 public static final Current STATOR_LIMIT = Amps.of(30);
                 public static final Current SUPPLY_LIMIT = Amps.of(30);

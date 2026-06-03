@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 import static frc.robot.subsystems.Deploy.DeployConstants.*;
@@ -40,11 +41,11 @@ public class Deploy extends SubsystemBase{
     }
 
     public Command Deploy(){
-        return runOnce(() -> io.deploy(M1_ANGLE));
+        return runOnce(() -> io.moveTo(M1_ANGLE));
     }
 
     public Command Retract(){
-        return runOnce(() -> io.retract(RETRACTED_ANGLE));
+        return runOnce(() -> io.moveTo(RETRACTED_ANGLE));
     }
 
     public Command Agitate(Angle StartPoint, Angle EndPoint, Time duration){
@@ -68,5 +69,15 @@ public class Deploy extends SubsystemBase{
 
     public Command MidAgitate(){
         return Agitate(M1_ANGLE, M2_ANGLE, Seconds.of(0.5)); //Time Placeholder
+    }
+
+    public void periodic(){
+        SmartDashboard.putNumber("Deploy Position", io.getPosition().in(Rotations));
+        SmartDashboard.putNumber("Deploy Speed", io.getSpeed().in(RotationsPerSecond));
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        io.periodic();
     }
 }
