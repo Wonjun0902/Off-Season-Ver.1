@@ -175,8 +175,8 @@ public class LazyTalonBuilder implements LazyCTREBuilder<LazyTalon, FeedbackSens
     }
 
     @Override
-    public LazyTalonBuilder withMotionMagicConfiguration(double expoV, double expoA, AngularVelocity cruiseVelocity,
-            AngularAcceleration maxAcceleration) {
+    public LazyTalonBuilder withMotionMagicConfiguration(double expoV, double expoA, double cruiseVelocity,
+            double maxAcceleration) {
         motorConfiguration.MotionMagic.MotionMagicCruiseVelocity = cruiseVelocity.in(RotationsPerSecond);
         motorConfiguration.MotionMagic.MotionMagicAcceleration = maxAcceleration.in(RotationsPerSecondPerSecond);
 
