@@ -10,13 +10,7 @@ public interface DeployIO {
 
     public void moveTo(Angle position);
 
-    public void moveToM1(Angle position);
-    public void moveToM2(Angle position);
-
-    public void agitateFrom(Angle StartPoint, Angle EndPoint, Time duration);
-
-    public void runDutyCycleLeft(double dutyCycle);
-    public void runDutyCycleRight(double dutyCycle);
+    public void runDutyCycle(double dutyCycle);
 
     public AngularVelocity getSpeed();
 
@@ -24,7 +18,7 @@ public interface DeployIO {
 
     public void periodic();
 
-    public void getCurrent();
+    public Current getCurrent();
     
     public Angle getPosition();
 }

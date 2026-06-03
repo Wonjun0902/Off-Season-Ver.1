@@ -50,8 +50,8 @@ public class Deploy extends SubsystemBase{
 
     public Command Agitate(Angle StartPoint, Angle EndPoint, Time duration){
         return new SequentialCommandGroup(
-            run(() -> io.agitateFrom(StartPoint, EndPoint, duration)).withTimeout(duration.in(Seconds)),
-            run(() -> io.agitateFrom(EndPoint, StartPoint, duration)).withTimeout(duration.in(Seconds))
+            run(() -> io.moveTo(EndPoint)).withTimeout(duration),
+            run(() -> io.moveTo(StartPoint)).withTimeout(duration)
         );
     }
 

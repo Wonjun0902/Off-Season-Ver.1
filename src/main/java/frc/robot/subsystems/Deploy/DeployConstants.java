@@ -2,6 +2,9 @@ package frc.robot.subsystems.Deploy;
 
 import static edu.wpi.first.units.Units.*;
 
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
@@ -10,8 +13,8 @@ public class DeployConstants {
 
     public static final AngularVelocity DEPOLY_SPEED = RotationsPerSecond.of(0.5); 
 
-    public static final Angle FORWARD_LIMIT = Rotations.of(0.0);
-    public static final Angle REVERSE_LIMIT = Rotations.of(0.0);
+    public static final double FORWARD_LIMIT = 0.0;
+    public static final double REVERSE_LIMIT = 0.0;
 
     public class Configurations{
         public static String CANBUS = "Kingstone";
@@ -54,6 +57,10 @@ public class DeployConstants {
 
         public class CanCoder{
             public static final int CANCODER_ID = 0; //not correct value!
+
+            public static final double CANCODER_OFFSET = 0.183837890625;
+            public static final SensorDirectionValue CANCODER_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
+            public static final FeedbackSensorSourceValue CANCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
         }
     }
 
