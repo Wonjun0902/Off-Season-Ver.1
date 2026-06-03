@@ -57,8 +57,7 @@ public class DeployConstants {
 
         public class CanCoder{
             public static final int CANCODER_ID = 0; //not correct value!
-
-            public static final double CANCODER_OFFSET = 0.183837890625;
+            public static final double CANCODER_OFFSET = 0.0;
             public static final SensorDirectionValue CANCODER_DIRECTION = SensorDirectionValue.CounterClockwise_Positive;
             public static final FeedbackSensorSourceValue CANCODER_TYPE = FeedbackSensorSourceValue.FusedCANcoder;
         }
