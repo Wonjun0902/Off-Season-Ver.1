@@ -1,5 +1,6 @@
 package frc.robot.subsystems.Deploy;
 
+import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,21 +19,35 @@ import static frc.robot.subsystems.Deploy.DeployConstants.*;
 public class Deploy extends SubsystemBase{
 
     private DeployIO io;
+
+    public final Trigger isAtM1;
+    public final Trigger isAtM2;
+
+    public final Trigger isRetracted;
+    public final Trigger isDeployed;
     
     public Deploy(DeployIO io) {
         this.io = io;
+
+        isAtM1 = new Trigger(() -> io.getPosition().isNear(M1_ANGLE, DEPLOY_TOLERANCE));
+        isAtM2 = new Trigger(() -> io.getPosition().isNear(M2_ANGLE, DEPLOY_TOLERANCE));
+        isRetracted = new Trigger(() -> io.getPosition().isNear(RETRACTED_ANGLE, DEPLOY_TOLERANCE));
+        isDeployed = new Trigger(() -> io.getPosition().isNear(DEPLOYED_ANGLE, DEPLOY_TOLERANCE));
     }
 
-    public Command deploy(){
+    public AngularVelocity getSpeed(){
+        return DEPOLY_SPEED;
+    }
+
+    public Command deploy(AngularVelocity speed){
         return run(() -> {
-            io.deploy();
+            io.deploy(getSpeed());
         });
     }
 
-     public Command retract(){
+     public Command retract(AngularVelocity speed){
         return run(() -> {
-            io.retract();
+            io.retract(getSpeed().unaryMinus());
         });
      }
-
 }
