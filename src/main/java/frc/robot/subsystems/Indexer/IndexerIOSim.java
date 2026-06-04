@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IndexerIOSim {
+public class IndexerIOSim implements IndexerIO{
 
     private DCMotor gearbox;
     private DCMotorSim motorSim;   
@@ -23,4 +23,10 @@ public class IndexerIOSim {
         gearbox = DCMotor.getKrakenX60(2);
         motorSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(gearbox, 0.1, 1), gearbox); 
     }
+
+    @Override
+    public void spinSpeedLeft(AngularVelocity speed){
+        motorSim.setInputVoltage(0);
+    }
+
 }
