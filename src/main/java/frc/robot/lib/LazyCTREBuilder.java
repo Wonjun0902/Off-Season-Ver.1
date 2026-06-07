@@ -90,8 +90,8 @@ public interface LazyCTREBuilder<T, S> {
          * @return this motor instance for method chaining
          */
         public LazyCTREBuilder<T, S> withMotionMagicConfiguration(double expoV, double expoA,
-                        double cruiseVelocity,
-                        double maxAcceleration);
+                        AngularVelocity cruiseVelocity,
+                        AngularAcceleration maxAcceleration);
 
         /**
          * Configures the motion magic parameters for this motor's motion prifiling
