@@ -6,6 +6,7 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 
@@ -41,8 +42,8 @@ public class DeployConstants {
                 public static final double EXPO_A = 0.0;
                 public static final double EXPO_V = 0.0;
 
-                public static final double CRUISE_VELOCITY = 0.0;
-                public static final double MAX_ACCELERATION = 0.0; 
+                public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(0.0);
+                public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(0.0); 
         }
 
         public class Positions{
