@@ -46,7 +46,8 @@ public class IndexerIOReal implements IndexerIO{
                 StaticFeedforwardSignValue.UseClosedLoopSign,
                 0)
             .build(); 
-        indexerLeft.setCoast(); // Remember this was set to Coast mode, not brake mode
+        indexerLeft.setCoast(); // Remember this was set to Coast mode, not brake mode, 
+                                //if break mode it will try to stop the motor when it is told ot
 
         indexerRight = new LazyTalonBuilder(
             Spindexer.Right.MOTOR_ID, 

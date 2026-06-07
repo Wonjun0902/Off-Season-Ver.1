@@ -3,8 +3,10 @@ package frc.robot.subsystems.Indexer;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
 
+import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
@@ -48,8 +50,8 @@ public class IndexerConstants {
                 public static final double EXPO_A = 0.0;
                 public static final double EXPO_V = 0.0;
 
-                public static final double CRUISE_VELOCITY = 80.0;
-                public static final double MAX_ACCELERATION = 160.0;
+                public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(80.0);
+                public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(160.0);
         }
 
             public class Right{
