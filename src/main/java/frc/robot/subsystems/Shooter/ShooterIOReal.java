@@ -1,5 +1,5 @@
 package frc.robot.subsystems.Shooter;
 
-public class ShooterIOReal {
+public class ShooterIOReal implements ShooerIO{
 
 }
