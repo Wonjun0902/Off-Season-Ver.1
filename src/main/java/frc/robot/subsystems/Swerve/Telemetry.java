@@ -65,4 +65,17 @@ public class Telemetry {
         new Mechanism2d(1, 1),
         new Mechanism2d(1,1),
     };
+
+    //Direction and length changing ligament for speed representation 
+    private final MechanismLigament2d[] m_moduleSpeed = new MechanismLigament2d[]{
+        m_moduleMechanism[0].getRoot("Root Speed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0.0)),            
+        m_moduleMechanism[1].getRoot("Root Speed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0.0)),
+        m_moduleMechanism[2].getRoot("Root Speed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0.0)),
+        m_moduleMechanism[3].getRoot("Root Speed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0.0)),
+    };
+
+    //Direction and length Changing ligament for Direction Representation 
+    
+
+
 }
