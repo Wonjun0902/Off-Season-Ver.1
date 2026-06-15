@@ -27,9 +27,11 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 
+import frc.robot.subsystems.Swerve.TunerConstants.TunerSwerveDrivetrain;
+
 /**
  * Class that extends the Phoenix 6 SwerveDriveTrain class and implements
  */
-public class Swerve extends TunerSwerveDriveTrain {
+public class Swerve extends TunerSwerveDrivetrain implements {
 
 }
