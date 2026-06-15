@@ -39,6 +39,11 @@ public class Telemetry {
     //What to publish over network tables for telemetry 
     private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
+    /**
+     * Struct is a type that allows us to group multiple variables together in a single name 
+     * Struct as a type can hold integers, floats, characters, or even other structs 
+     */
+
     //Robot Swerve DriveState
     private final NetworkTable driveStateTable = inst.getTable("DriveState Table");
     private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("Pose", Pose2d.struct).publish();
