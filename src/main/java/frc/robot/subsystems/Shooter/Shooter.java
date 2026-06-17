@@ -6,11 +6,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static frc.robot.RobotContainer.drivetrain;
+
 import static frc.robot.subsystems.Shooter.ShooterConstants.*;
 
 public class Shooter extends SubsystemBase{
+    ShooterIO io;
 
-    private ShooterIO io;
-
-    
+    public Shooter(ShooterIO io){
+        this.io = io;
+    }
 }
