@@ -15,12 +15,14 @@ import frc.robot.DriverControls;
 import frc.robot.subsystems.Swerve.TunerConstants;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.getCachedAlliance;
+
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.ForwardPerspectiveValue;
 import static frc.robot.subsystems.Shooter.ShooterConstants.AngleLockConfig.*;
 
-import frc.robot.DriverControls;
+import static frc.robot.RobotContainer.autoAlign;
 
 /**
  * A class that manages the bot's autoalign logic for shooting at any position
@@ -30,7 +32,7 @@ public class AutoAlign {
     //Creates a new Swerve Request for AngleLock with PID values
     private static final SwerveRequest.FieldCentricFacingAngle angleLock = new SwerveRequest.FieldCentricFacingAngle()
         .withHeadingPID(ANGLELOCK_P, ANGLELOCK_I, ANGLELOCK_D) // Needs to be Tuned
-        .withMaxAbsRotationalRate(MAX_ROT_ANGLELOCK)// Needs to be Tuned
+        .withMaxAbsRotationalRate(MAX_ROT_ANGLELOCK);// Needs to be Tuned
     
     //Creates Allign Command 
     public Command align(Angle setPoint){
@@ -47,15 +49,15 @@ public class AutoAlign {
         .beforeStarting(() -> angleLock.HeadingController.reset());
     }
 
-    public Command alignForPassing(){
+    public Command alignForPassing(DoubleSupplier vx, DoubleSupplier vy){
         //Pass Angle = 180 degrees from your perpective     
         Rotation2d PassAngle = new Rotation2d(Math.PI);
-
         return drivetrain.applyRequest(
             angleLock
                 .withTargetDirection(PassAngle)
                 .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
-                .withVelocityX(DriverControls.defaultDriveControls.)
-        )
+                .withVelocityX(vx.get())
+                .withVelocityY(vy.get())
+        );
     }
 }

@@ -1,6 +1,9 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+import static frc.robot.RobotContainer.autoAlign;
 
 import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -8,12 +11,17 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.Shooter.AutoAlign;
 import frc.robot.subsystems.Swerve.TunerConstants;
 
 public class DriverControls {
 
     public static final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
+
+	public static final 
 
     public static final SlewRateLimiter slewRateX = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
 	public static final SlewRateLimiter slewRateY = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
@@ -53,9 +61,10 @@ public class DriverControls {
 						* TunerConstants.rotationalSpeedLimiter);
 	}
 
-    public static AngularVelocity GetXVelocity(){
-        return defaultDriveControls(999).apply(null, null)
-    }
+	// public static final double getXVelocity(){
+	// 	double xVelocity = -DRIVER_CONTROLLER.getLeftY();
+	// 	return xVelocity;
+	// }
 
 	private static Rotation2d m_desiredHeading = new Rotation2d();
 
@@ -66,7 +75,26 @@ public class DriverControls {
 			double angleChange = thetaInput * TunerConstants.MaxAngularRate * TunerConstants.rotationalSpeedLimiter * 0.02;
 			m_desiredHeading = m_desiredHeading.plus(Rotation2d.fromRadians(angleChange));
 		}
-
     }
+
+	//Remeber the method .calculate!!!
+	//Output Speed = JoyStick Percentage * Max Possible Speed * Safety Limiter
+	public static void ConfigureBindings(){
+
+		final LinearVelocity MaxSpeed12V = MetersPerSecond.of(0.0);
+
+		final double speedLimiter = 0.0;
+
+		DRIVER_CONTROLLER.a().whileTrue(
+			autoAlign.alignForPassing(
+				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
+						*MaxSpeed12V.in(MetersPerSecond)
+						*speedLimiter),
+				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
+						*MaxSpeed12V.in(MetersPerSecond)
+						*speedLimiter)
+			)
+		);
+	}
 }
 
