@@ -60,4 +60,27 @@ public class AutoAlign {
                 .withVelocityY(vy.get())
         );
     }
+
+    public static Translation2d getHubPos(){
+        return getCachedAlliance().get().equals(Alliance.Blue) ? ShooterConstants.Field.BLUE_HUB_POSE : ShooterConstants.Field.BLUE_HUB_POSE;
+    }
+
+    public Command alignToHub(){
+        //Define the Angle of the Hub first
+        Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();
+        //Get the Hub Pos and Get the Subtracted Vector
+        Translation2d hubPos = getHubPos();
+        Translation2d subtractedVector = robotPos.minus(hubPos);
+        //Get the rotation2d of the subtracted Vector
+        Rotation2d vectorAngle = subtractedVector.getAngle();
+
+        return drivetrain.applyRequest(
+            angleLock
+                .withTargetDirection(vectorAngle)
+                .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
+                .withVelocityX(0)
+                .withVelocityY(0)
+        );
+
+    }
 }

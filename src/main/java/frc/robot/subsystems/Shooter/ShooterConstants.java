@@ -1,5 +1,7 @@
 package frc.robot.subsystems.Shooter;
 
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -25,4 +27,18 @@ public class ShooterConstants {
         public static final double ANGLELOCK_D = 0.0;
     }
 
+    public class Field {
+        public static final AprilTagFieldLayout FIELD_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+    
+        public static final double FIELD_WIDTH = Inches.of(47.0).in(Meters);
+        public static final double FIELD_LENGTH = FIELD_LAYOUT.getFieldLength();
+        public static final Translation2d BLUE_HUB_POSE = new Translation2d(
+            4.625, // 4.625594, 
+            4.034536 // 4.034536
+        );
+        public static final Translation2d RED_HUB_POSE = new Translation2d(
+            11.905,// 12.896088,
+            4.034536 // 4.034536
+        );
+    }
 }
