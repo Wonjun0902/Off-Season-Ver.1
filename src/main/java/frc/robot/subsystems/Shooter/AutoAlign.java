@@ -62,7 +62,7 @@ public class AutoAlign {
     }
 
     public static Translation2d getHubPos(){
-        return getCachedAlliance().get().equals(Alliance.Blue) ? ShooterConstants.Field.BLUE_HUB_POSE : ShooterConstants.Field.BLUE_HUB_POSE;
+        return getCachedAlliance().get().equals(Alliance.Blue) ? ShooterConstants.Field.BLUE_HUB_POSE : ShooterConstants.Field.RED_HUB_POSE;
     }
 
     public Command alignToHub(){
@@ -70,7 +70,7 @@ public class AutoAlign {
         Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();
         //Get the Hub Pos and Get the Subtracted Vector
         Translation2d hubPos = getHubPos();
-        Translation2d subtractedVector = robotPos.minus(hubPos);
+        Translation2d subtractedVector = hubPos.minus(robotPos);
         //Get the rotation2d of the subtracted Vector
         Rotation2d vectorAngle = subtractedVector.getAngle();
 
