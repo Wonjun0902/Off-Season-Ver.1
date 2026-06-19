@@ -39,7 +39,7 @@ public class AutoAlign {
         //Creates Target
         Rotation2d target = new Rotation2d(setPoint);
 
-        return drivetrain.applyRequest(() -> 
+        return drivetrain.applyRequest(
             angleLock
                 .withTargetDirection(target)
                 .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
@@ -49,7 +49,7 @@ public class AutoAlign {
         .beforeStarting(() -> angleLock.HeadingController.reset());
     }
 
-    public Command alignForPassing(DoubleSupplier vx, DoubleSupplier vy){
+    public Command alignForPassing(Supplier<Double> vx, Supplier<Double> vy){
         //Pass Angle = 180 degrees from your perpective     
         Rotation2d PassAngle = new Rotation2d(Math.PI);
         return drivetrain.applyRequest(

@@ -10,6 +10,7 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -217,8 +218,8 @@ public class Swerve extends TunerSwerveDrivetrain implements Subsystem {
      * @param request Function returning the request to apply
      * @return Command to run
      */
-    public Command applyRequest(Supplier<SwerveRequest> request) {
-        return run(() -> this.setControl(request.get()));
+    public Command applyRequest(FieldCentricFacingAngle request) {
+        return run(() -> this.setControl(fieldCentricFacingAngle.get()));
     }
 
     /**
