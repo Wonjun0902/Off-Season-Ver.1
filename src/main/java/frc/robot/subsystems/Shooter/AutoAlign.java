@@ -39,25 +39,26 @@ public class AutoAlign {
         //Creates Target
         Rotation2d target = new Rotation2d(setPoint);
 
-        return drivetrain.applyRequest(
-            angleLock
+        return drivetrain.applyRequest(() -> {
+            return angleLock
                 .withTargetDirection(target)
                 .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
                 .withVelocityX(0)
-                .withVelocityY(0)
-        )
-        .beforeStarting(() -> angleLock.HeadingController.reset());
+                .withVelocityY(0);
+        }
+        );
     }
 
     public Command alignForPassing(Supplier<Double> vx, Supplier<Double> vy){
         //Pass Angle = 180 degrees from your perpective     
         Rotation2d PassAngle = new Rotation2d(Math.PI);
-        return drivetrain.applyRequest(
-            angleLock
+        return drivetrain.applyRequest(() -> {
+            return angleLock
                 .withTargetDirection(PassAngle)
                 .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
                 .withVelocityX(vx.get())
-                .withVelocityY(vy.get())
+                .withVelocityY(vy.get());
+            }
         );
     }
 
@@ -66,6 +67,7 @@ public class AutoAlign {
     }
 
     public Command alignToHub(){
+        return drivetrain.applyRequest(() -> {
         //Define the Angle of the Hub first
         Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();
         //Get the Hub Pos and Get the Subtracted Vector
@@ -73,14 +75,13 @@ public class AutoAlign {
         Translation2d subtractedVector = hubPos.minus(robotPos);
         //Get the rotation2d of the subtracted Vector
         Rotation2d vectorAngle = subtractedVector.getAngle();
-
-        return drivetrain.applyRequest(
-            angleLock
-                .withTargetDirection(vectorAngle)
-                .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
-                .withVelocityX(0)
-                .withVelocityY(0)
-        );
+        //Apply the request
+        return angleLock
+            .withTargetDirection(vectorAngle)
+            .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance) // Recommended over OperatorPerspective
+            .withVelocityX(0)
+            .withVelocityY(0);
+    });
 
     }
 }

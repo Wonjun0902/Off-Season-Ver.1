@@ -218,8 +218,8 @@ public class Swerve extends TunerSwerveDrivetrain implements Subsystem {
      * @param request Function returning the request to apply
      * @return Command to run
      */
-    public Command applyRequest(FieldCentricFacingAngle request) {
-        return run(() -> this.setControl(fieldCentricFacingAngle.get()));
+    public Command applyRequest(Supplier<SwerveRequest> request) {
+        return run(() -> this.setControl(request.get()));
     }
 
     /**
