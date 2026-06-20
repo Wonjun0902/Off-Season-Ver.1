@@ -67,6 +67,7 @@ public class AutoAlign {
         Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();
         //Get the Hub Pos and Get the Subtracted Vector
         Translation2d hubPos = getHubPos();
+        //Subtract the hub from the robot to get the Rotation 
         Translation2d subtractedVector = hubPos.minus(robotPos);
         //Get the rotation2d of the subtracted Vector
         Rotation2d vectorAngle = subtractedVector.getAngle();
