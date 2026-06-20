@@ -62,12 +62,7 @@ public class AutoAlign {
         );
     }
 
-    public static Translation2d getHubPos(){
-        return getCachedAlliance().get().equals(Alliance.Blue) ? ShooterConstants.Field.BLUE_HUB_POSE : ShooterConstants.Field.RED_HUB_POSE;
-    }
-
-    public Command alignToHub(){
-        return drivetrain.applyRequest(() -> {
+    public static Rotation2d getAlignAngle(){
         //Define the Angle of the Hub first
         Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();
         //Get the Hub Pos and Get the Subtracted Vector
@@ -75,13 +70,33 @@ public class AutoAlign {
         Translation2d subtractedVector = hubPos.minus(robotPos);
         //Get the rotation2d of the subtracted Vector
         Rotation2d vectorAngle = subtractedVector.getAngle();
+
+        return vectorAngle;
+    }
+
+    public static Translation2d getHubPos(){
+        return getCachedAlliance().get().equals(Alliance.Blue) ? ShooterConstants.Field.BLUE_HUB_POSE : ShooterConstants.Field.RED_HUB_POSE;
+    }
+
+    public Command alignToHub(){
+        return drivetrain.applyRequest(() -> {
         //Apply the request
         return angleLock
-            .withTargetDirection(vectorAngle)
-            .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance) // Recommended over OperatorPerspective
+            .withTargetDirection(getAlignAngle())
+            .withForwardPerspective(ForwardPerspectiveValue.BlueAlliance) 
             .withVelocityX(0)
             .withVelocityY(0);
-    });
+    })
+    .beforeStarting(() -> angleLock.HeadingController.reset())
+    .withTimeout(1)
+    .until(() -> {
+        Rotation2d vectorAngle = getAlignAngle();
+        Rotation2d currentAngle = drivetrain.getCachedState().Pose.getRotation();
 
+        double error = vectorAngle.minus(currentAngle).getDegrees();
+
+        return (Math.abs(error) <= 2);
+    })
+    .andThen(drivetrain.applyRequest(() -> DriverControls.brake));
     }
 }
