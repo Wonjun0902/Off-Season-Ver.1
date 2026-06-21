@@ -16,7 +16,6 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.wpilibj.CAN;
 import frc.robot.lib.LazyTalon;
 import frc.robot.lib.LazyTalonBuilder;
 

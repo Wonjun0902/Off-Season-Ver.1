@@ -51,7 +51,8 @@ public class ShooterConstants {
 
     public class LookupTables{
         public static final InterpolatingDoubleTreeMap DIST_TIME_MAP = new InterpolatingDoubleTreeMap();
-        public static final InterpolatingDoubleTreeMap SPEEDS_INCREMENT_MAP = new InterpolatingDoubleTreeMap();
+        public static final InterpolatingDoubleTreeMap HOOD_LOOKUP_TABLE = new InterpolatingDoubleTreeMap();
+        public static final InterpolatingDoubleTreeMap SHOOTER_LOOKUP_TABLE = new InterpolatingDoubleTreeMap();
 
         public static final double          HALF_HUB                 = 47.0 / 2.0;
         public static final double          HALF_BUMPER              = 16.5;
@@ -67,26 +68,53 @@ public class ShooterConstants {
         public static final Time            TRENCH_TIME              = Seconds.of(2.0); //NOT TRUE!!
         public static final Time            TOWER_BACK_TIME          = Seconds.of(3.0); //NOT TRUE!! 
 
-        public static final AngularVelocity  IDLE_VELOCITY           = RotationsPerSecond.of(0.0);
-        public static final AngularVelocity  HUB_VELOCITY            = RotationsPerSecond.of(1.0);
-        public static final AngularVelocity  TOWER_FRON_VELOCITY     = RotationsPerSecond.of(2.0);
-        public static final AngularVelocity  TRENCH_VELOCITY         = RotationsPerSecond.of(3.0);
-        public static final AngularVelocity  TOWER_BACK_VELOCITY     = RotationsPerSecond.of(4.0);
+        public static final AngularVelocity SHOOTER_HUB_SPEED        = RotationsPerSecond.of(26.0);
+        public static final AngularVelocity SHOOTER_RENEE_SPEED      = RotationsPerSecond.of(32.0);
+        public static final AngularVelocity SHOOTER_TOWER_SPEED      = RotationsPerSecond.of(44.0);
+        public static final AngularVelocity SHOOTER_TRENCH_SPEED     = RotationsPerSecond.of(60.0);
+        public static final AngularVelocity SHOOTER_BACK_SPEED       = RotationsPerSecond.of(50.0);
+        public static final AngularVelocity SHOOTER_PASS_SPEED       = RotationsPerSecond.of(60.0);
+        
+        public static final Angle           HOOD_HUB_ANGLE           = Rotations.of(0.1);
+        public static final Angle           HOOD_TOWER_ANGLE         = Rotations.of(0.3);
+        public static final Angle           HOOD_TRENCH_ANGLE        = Rotations.of(0.6);
+        public static final Angle           HOOD_BACK_ANGLE          = Rotations.of(0.425);
+        public static final Angle           HOOD_PASS_ANGLE          = Rotations.of(0.85); // +0.525
 
         public static final Time            OFF_SET_TIME             = Seconds.of(0.1); 
         
         static{
             DIST_TIME_MAP.put(1.0,          HUB_TIME.in(Seconds));
-            SPEEDS_INCREMENT_MAP.put(1.0,       IDLE_VELOCITY.in(RotationsPerSecond));
+            HOOD_LOOKUP_TABLE   .put(1.3,        HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(1.3,        SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
 
             DIST_TIME_MAP.put(2.0, 1.0     +HUB_TIME.in(Seconds));
-            SPEEDS_INCREMENT_MAP.put(2.0, 1.0  +IDLE_VELOCITY.in(RotationsPerSecond));
+            HOOD_LOOKUP_TABLE   .put(1.77, 0.0  +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(1.77, 2    +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
 
             DIST_TIME_MAP.put(3.0, 2.0     +HUB_TIME.in(Seconds));
-            SPEEDS_INCREMENT_MAP.put(2.0, 2.0  +IDLE_VELOCITY.in(RotationsPerSecond));
+            HOOD_LOOKUP_TABLE   .put(2.25, 0.15 +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(2.25, 2    +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
 
             DIST_TIME_MAP.put(3.0, 3.0     +HUB_TIME.in(Seconds));
-            SPEEDS_INCREMENT_MAP.put(2.0, 3.0  +IDLE_VELOCITY.in(RotationsPerSecond));
+            HOOD_LOOKUP_TABLE   .put(2.95, 0.2  +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(2.95, 4    +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
+
+            HOOD_LOOKUP_TABLE   .put(3.75, 0.2  +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(3.75, 8   +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
+
+            HOOD_LOOKUP_TABLE   .put(4.05, 0.25 +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(4.05, 8   +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
+            
+            HOOD_LOOKUP_TABLE   .put(4.95, 0.25 +HOOD_HUB_ANGLE     .in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(4.95, 12   +SHOOTER_HUB_SPEED  .in(RotationsPerSecond));
+
+            //For Passing 
+            HOOD_LOOKUP_TABLE   .put(5.85, 0.35 +HOOD_HUB_ANGLE.in(Rotations));
+            SHOOTER_LOOKUP_TABLE.put(5.85, 38   +SHOOTER_HUB_SPEED.in(RotationsPerSecond));
+
+            HOOD_LOOKUP_TABLE.put(10.65,0.65);
+            SHOOTER_LOOKUP_TABLE.put(10.65, 100.0);
         }
     }
 }
