@@ -4,8 +4,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 public interface ShooterIO {
 
-    public void spinSpeedRight(AngularVelocity velocity);
-    public void spinSpeedLeft(AngularVelocity velocity);
+    public void setShooterSpeed(AngularVelocity velocity);
     public void setHoodAngle(Angle angle);
 
     public void stop();

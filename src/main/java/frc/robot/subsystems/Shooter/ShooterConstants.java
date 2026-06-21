@@ -1,12 +1,16 @@
 package frc.robot.subsystems.Shooter;
 
+import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Centimeters;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Seconds;
+
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -22,7 +26,92 @@ import edu.wpi.first.units.measure.Time;
 
 public class ShooterConstants {
 
-    public static double FUEL_SPEED = 1.0; //m/s
+    public static double FUEL_SPEED = 1.0; //m/s NOT REAL!!!!!
+    public static Angle TIRM_INCREMENT_ANGLE = Rotations.of(2.0);
+    public static AngularVelocity TRIM_INCREMENT_SPEED = RotationsPerSecond.of(2.0);
+
+    public class Shooter{
+        public static final double SENSOR_TO_MECH_RATIO = 1.0; // SInce it is free spining
+
+        public static class Left{
+            public static final int MOTOR_ID = 14;
+                public static final int FOLLOWER_LEFT_ID = 21;
+                
+                public static final double kP = 6.0;
+                public static final double kI = 0.0;
+                public static final double kD = 0.0;
+                public static final double kF = 0.0;
+                public static final double kS = 0.0;
+                public static final double kV = 0.0;
+                public static final double kG = 0.0;
+                public static final double kA = 0.0;
+
+                public static final Current CURRENT_FF = Amps.of(16);
+
+                public static final double EXPO_A = 0.0;
+                public static final double EXPO_V = 0.0;
+        }
+
+        public static class Right{
+            public static final int MOTOR_ID = 13;
+                public static final int FOLLOWER_RIGHT_ID = 22;
+
+                // NOT DONE
+                public static final double kP = 6.0;
+                public static final double kI = 0.0;
+                public static final double kD = 0.0;
+                public static final double kF = 0.0;
+                public static final double kS = 0.0;
+                public static final double kV = 0.0;
+                public static final double kG = 0.0;
+                public static final double kA = 0.0;
+
+                public static final Current CURRENT_FF = Amps.of(16);
+
+                public static final double EXPO_A = 0.0;
+                public static final double EXPO_V = 0.0;
+        }
+
+        public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(80);
+        public static final AngularVelocity MAX_ACCELERATION = RotationsPerSecond.of(160);
+
+        public static final Current STATOR_CURRENT_LIMIT = Amps.of(90);
+        public static final Current SUPPLY_CURRENT_LIMIT = Amps.of(60);
+        public static final Current SUPPLY_LOWER_LIMIT = Amps.of(30);
+        public static final Time SUPPLY_LOWER_TIME = Seconds.of(0.25);
+    }
+
+    public class Hood{
+        public static final int MOTOR_ID = 15;
+        public static final int CANCODER_ID = 15;
+
+        public static final double SENSOR_OFFSET = -0.119873046875;
+        public static final SensorDirectionValue SENSOR_DIRECTION = SensorDirectionValue.Clockwise_Positive;
+        public static final double ROTOR_SENSOR_RATIO = 25.0; 
+        public static final double SENSOR_MECH_RATIO =1.0; 
+
+        public static final double kP = 11.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kF = 0.0;
+        public static final double kS = 0.4;
+        public static final double kV = 1.4;
+        public static final double kG = 0.0;
+        public static final double kA = 0.0;
+
+        public static final double EXPO_A = 0.0;
+        public static final double EXPO_V = 0.0;
+
+        public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(7.3);
+        public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(21);
+
+
+        public static final Current STATOR_CURRENT_LIMIT = Amps.of(20);
+        public static final Current SUPPLY_CURRENT_LIMIT = Amps.of(30);
+
+        public static final Angle SOFT_HI = Rotations.of(0.95); // soft limits
+        public static final Angle SOFT_LO = Rotations.of(0.05);
+    }
 
     public class AngleLockConfig{
         public static final AngularVelocity MAX_ROT_ANGLELOCK = RotationsPerSecond.of(0.0);
