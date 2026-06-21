@@ -1,31 +1,13 @@
 package frc.robot.subsystems.Shooter;
 
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.Radians;
-import static edu.wpi.first.units.Units.Rotation;
-import static edu.wpi.first.units.Units.Seconds;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.units.measure.Time;
+
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.DriverControls;
-import frc.robot.subsystems.Swerve.Swerve;
-import frc.robot.subsystems.Swerve.TunerConstants;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.getCachedAlliance;
 
-import java.time.format.SignStyle;
-import java.util.Arrays;
-import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
@@ -33,10 +15,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest.ForwardPerspectiveValue;
 import static frc.robot.subsystems.Shooter.ShooterConstants.AngleLockConfig.*;
 
 import static frc.robot.subsystems.Shooter.ShooterConstants.LookupTables.DIST_TIME_MAP;
-import static frc.robot.subsystems.Shooter.ShooterConstants.LookupTables.SPEEDS_INCREMENT_MAP;
-import static frc.robot.subsystems.Shooter.ShooterConstants.*;
-import static frc.robot.RobotContainer.autoAlign;
-import static frc.robot.RobotContainer.shootOnetheMove;
 
 public class ShootOnetheMove {
 
@@ -99,9 +77,9 @@ public static Translation2d getAccordingPose(){
     Translation2d current = getCurrentPose();
 
     //Get the time, speed and the distance
-    Double timeOfFuel = getTimeOfFuel();
-    Double xVelocity = getXSpeed();
-    Double yVelocity = getYSpeed();
+    double timeOfFuel = getTimeOfFuel();
+    double xVelocity = getXSpeed();
+    double yVelocity = getYSpeed();
 
     //Get the additional Trans2d
     Translation2d addingTranslation2d = new Translation2d(xVelocity, yVelocity).times(timeOfFuel);
@@ -118,7 +96,7 @@ public static Rotation2d getAlginAngle(){
     //Get the Hub Pose
     Translation2d hubPose = getHubPose();
     //Get the subtracted Vector
-    Translation2d subtractedVector = accordingPose.minus(hubPose);
+    Translation2d subtractedVector = hubPose.minus(accordingPose);
     //Get the Roation2d of the subtracted Vector
     Rotation2d vectorRotation2d = subtractedVector.getAngle();
 
@@ -132,10 +110,10 @@ private static final SwerveRequest.FieldCentricFacingAngle angleLock = new Field
 
 public Command ShootOnMove(Supplier<Double> vx, Supplier<Double> vy){
 
-    Rotation2d target = getAlginAngle();
-
     return drivetrain.applyRequest(
         () -> {
+            Rotation2d target = getAlginAngle();
+
             return angleLock
                 .withTargetDirection(target)
                 .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
