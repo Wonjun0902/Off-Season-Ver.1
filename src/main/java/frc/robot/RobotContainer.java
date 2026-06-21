@@ -7,6 +7,7 @@ import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.subsystems.Shooter.AutoAlign;
+import frc.robot.subsystems.Shooter.ShootOnetheMove;
 import frc.robot.subsystems.Swerve.Swerve;
 import frc.robot.subsystems.Swerve.TunerConstants;
 
@@ -15,6 +16,7 @@ public class RobotContainer {
     public static final Swerve drivetrain = TunerConstants.createDrivetrain();
 
     public static AutoAlign autoAlign;
+    public static ShootOnetheMove shootOnetheMove;
 
     private static Optional<Alliance> alliance = null;
 

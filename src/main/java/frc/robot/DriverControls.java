@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import static frc.robot.RobotContainer.autoAlign;
+import static frc.robot.RobotContainer.shootOnetheMove;;
 
 import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -87,6 +88,17 @@ public class DriverControls {
 
 		DRIVER_CONTROLLER.a().whileTrue(
 			autoAlign.alignForPassing(
+				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
+						*MaxSpeed12V.in(MetersPerSecond)
+						*speedLimiter),
+				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
+						*MaxSpeed12V.in(MetersPerSecond)
+						*speedLimiter)
+			)
+		);
+
+		DRIVER_CONTROLLER.b().whileTrue(
+			shootOnetheMove.ShootOnMove(
 				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter),
