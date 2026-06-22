@@ -50,8 +50,8 @@ public class IndexerConstants {
                 public static final double EXPO_A = 0.0;
                 public static final double EXPO_V = 0.0;
 
-                public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(80.0);
-                public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(160.0);
+                public static final Double CRUISE_VELOCITY = 80.0;
+                public static final Double MAX_ACCELERATION = 160.0;
         }
 
             public class Right{
