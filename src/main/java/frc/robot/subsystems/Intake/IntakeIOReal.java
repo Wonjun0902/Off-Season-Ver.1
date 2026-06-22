@@ -2,21 +2,13 @@ package frc.robot.subsystems.Intake;
 
 import static edu.wpi.first.units.Units.*;
 import static frc.robot.subsystems.Intake.IntakeConstants.SUPPLY_LIMIT;
-import static frc.robot.subsystems.Intake.IntakeConstants.Configurations.*;
 import static frc.robot.subsystems.Intake.IntakeConstants.Configurations.TopRoller.*;
 
-import com.ctre.phoenix6.configs.CANrangeConfiguration;
-import com.ctre.phoenix6.configs.FovParamsConfigs;
-import com.ctre.phoenix6.configs.ProximityParamsConfigs;
-import com.ctre.phoenix6.hardware.CANrange;
-import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.wpilibj.CAN;
 import frc.robot.lib.LazyTalon;
 import frc.robot.lib.LazyTalonBuilder;
 import frc.robot.subsystems.Intake.IntakeConstants.Configurations.BottomRoller;

@@ -5,12 +5,8 @@ import frc.robot.lib.LazyFXSBuilder;
 import frc.robot.lib.LazyTalon;
 import frc.robot.lib.LazyTalonBuilder;
 import frc.robot.subsystems.Indexer.IndexerConstants.Configurations;
-import frc.robot.subsystems.Indexer.IndexerConstants.Configurations.Spindexer.Right;
 import frc.robot.subsystems.Shooter.ShooterConstants.*;
 import frc.robot.subsystems.Shooter.ShooterConstants.Shooter;
-import frc.robot.subsystems.Shooter.ShooterConstants.Shooter.Left;
-
-import java.lang.module.Configuration;
 
 import com.ctre.phoenix6.signals.ExternalFeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
