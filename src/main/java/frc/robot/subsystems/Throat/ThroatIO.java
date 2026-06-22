@@ -4,7 +4,8 @@ import edu.wpi.first.units.measure.AngularVelocity;
 
 public interface ThroatIO {
 
-    public void setThroatSpeed(AngularVelocity velocity);
+    public void setRightSpeed(AngularVelocity velocity);
+    public void setLeftSpeed(AngularVelocity velocity);
     
     public void stop();
 
