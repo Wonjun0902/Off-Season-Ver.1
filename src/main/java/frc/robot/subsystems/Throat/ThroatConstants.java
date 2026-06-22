@@ -46,6 +46,8 @@ public class ThroatConstants {
 
                 public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(80.0);
                 public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(160.0);
+
+                public static final int FOLLOWER_LEFT_ID = 0;
             }
 
             public class Right{
@@ -69,6 +71,8 @@ public class ThroatConstants {
 
                 public static final AngularVelocity CRUISE_VELOCITY = RotationsPerSecond.of(80.0);
                 public static final AngularAcceleration MAX_ACCELERATION = RotationsPerSecondPerSecond.of(160.0);
+
+                public static final int FOLLOWER_RIGHT_ID = 0;
             }
         }
     }
