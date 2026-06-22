@@ -24,6 +24,7 @@ public class DeployConstants {
                 public static final int MOTOR_ID = 0; //not correct value! 
                 public static final double GEAR_RATIO = 1.0; //not correct value!
                 public static final double ROTOR_TO_SENSOR_RATIO = 40.0 / 18.0 * 45.0; 
+                public static final double SENSOR_TO_MECH_RATIO = 1;
 
                 public static final Current STATOR_LIMIT = Amps.of(30);
                 public static final Current SUPPLY_LIMIT = Amps.of(30);
