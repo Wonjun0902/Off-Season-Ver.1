@@ -6,21 +6,12 @@ import static frc.robot.subsystems.Deploy.DeployConstants.REVERSE_LIMIT;
 import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.*;
 import frc.robot.subsystems.Deploy.DeployConstants.Configurations.Deployer;
 import frc.robot.subsystems.Deploy.DeployConstants.Configurations;
-import frc.robot.subsystems.Deploy.DeployConstants.Configurations.CanCoder;
 
 import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.CanCoder.CANCODER_DIRECTION;
 import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.CanCoder.CANCODER_ID;
 import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.CanCoder.CANCODER_OFFSET;
 import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.CanCoder.CANCODER_TYPE;
-import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.Positions.M1_ANGLE;
-import static frc.robot.subsystems.Deploy.DeployConstants.Configurations.Positions.M2_ANGLE;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.configs.CANrangeConfiguration;
-import com.ctre.phoenix6.configs.FovParamsConfigs;
-import com.ctre.phoenix6.configs.ProximityParamsConfigs;
-import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.hardware.CANrange;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
@@ -28,8 +19,7 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.units.measure.Time;
+
 import frc.robot.lib.LazyTalon;
 import frc.robot.lib.LazyTalonBuilder;
 
