@@ -12,7 +12,6 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.units.measure.AngularVelocity;
 import frc.robot.lib.LazyTalon;
 import frc.robot.lib.LazyTalonBuilder;
-import frc.robot.subsystems.Shooter.ShooterIO;
 import frc.robot.subsystems.Throat.ThroatConstants.Configurations.Throat.Left;
 import frc.robot.subsystems.Throat.ThroatConstants.Configurations.Throat.Right;
 
