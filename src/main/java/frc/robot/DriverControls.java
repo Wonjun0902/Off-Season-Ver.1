@@ -4,9 +4,11 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import static frc.robot.RobotContainer.autoAlign;
-import static frc.robot.RobotContainer.shootOnetheMove;;
+import static frc.robot.RobotContainer.drivetrain;
+import static frc.robot.RobotContainer.mrPatel;
+import static frc.robot.RobotContainer.shootOnetheMove;
 
-import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -14,24 +16,28 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter.AutoAlign;
 import frc.robot.subsystems.Swerve.TunerConstants;
+
+import static frc.robot.subsystems.Swerve.TunerConstants.*;
 
 public class DriverControls {
 
     public static final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
-    public static final SlewRateLimiter slewRateX = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
-	public static final SlewRateLimiter slewRateY = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
+    public static final SlewRateLimiter slewRateX = new SlewRateLimiter(SLEW_RATE_TRANSLATION.magnitude());// JUST A PLACEHOLDER VALUE!!!
+	public static final SlewRateLimiter slewRateY = new SlewRateLimiter(SLEW_RATE_TRANSLATION.magnitude());// JUST A PLACEHOLDER VALUE!!!
 	/* Setting up bindings for necessary control of the swerve drive platform */
 	public static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-			.withDeadband(0.0).withRotationalDeadband(0.0) // JUST A PLACEHOLDER VALUE!!!
+			.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
 			.withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 	public static final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
 
 	public static final SwerveRequest.FieldCentricFacingAngle testDrive = new SwerveRequest.FieldCentricFacingAngle() 
-			.withDeadband(0.0).withRotationalDeadband(0.0)// JUST A PLACEHOLDER VALUE!!!
+			.withDeadband(MaxSpeed*0.1).withRotationalDeadband(MaxAngularRate*0.1)// JUST A PLACEHOLDER VALUE!!!
 			.withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
 			.withHeadingPID(5.0, 0, 0.0);
 			
@@ -65,25 +71,17 @@ public class DriverControls {
 	// 	return xVelocity;
 	// }
 
-	private static Rotation2d m_desiredHeading = new Rotation2d();
-
-	public static final SwerveRequest testDefaultDriveControls(double maxSpeed) {
-		double thetaInput = -DRIVER_CONTROLLER.getRightX();
-
-		if (Math.abs(thetaInput) > 0.1) {
-			double angleChange = thetaInput * TunerConstants.MaxAngularRate * TunerConstants.rotationalSpeedLimiter * 0.02;
-			m_desiredHeading = m_desiredHeading.plus(Rotation2d.fromRadians(angleChange));
-		}
-    }
-
 	//Remeber the method .calculate!!!
 	//Output Speed = JoyStick Percentage * Max Possible Speed * Safety Limiter
 	public static void ConfigureBindings(){
+
+		SmartDashboard.putString("Drive Mode", "Normal");
 
 		final LinearVelocity MaxSpeed12V = MetersPerSecond.of(0.0);
 
 		final double speedLimiter = 0.0;
 
+		//PASS
 		DRIVER_CONTROLLER.a().whileTrue(
 			autoAlign.alignForPassing(
 				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
@@ -92,18 +90,27 @@ public class DriverControls {
 				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter)
+			).alongWith(
+				mrPatel.shootFromEverywhere()
 			)
 		);
 
+		//SHOOT ON MOVE
 		DRIVER_CONTROLLER.b().whileTrue(
-			shootOnetheMove.ShootOnMove(
+			shootOnetheMove.lockForShootOnMove(
 				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter),
 				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter)
-			)
+			).alongWith(mrPatel.shootFromEverywhere())
+		);
+
+		//OVERDRIVE!!!!!!!!!
+		DRIVER_CONTROLLER.y().whileTrue(
+			Commands.runOnce(() -> SmartDashboard.putString("Drive mode: ", "OVERDRIVE"))
+				.alongWith(drivetrain.applyRequest(() -> defaultDriveControls(overdriveSpeedLimiter)))
 		);
 	}
 }
