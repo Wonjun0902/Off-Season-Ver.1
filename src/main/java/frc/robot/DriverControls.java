@@ -22,8 +22,6 @@ public class DriverControls {
 
     public static final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
-	public static final 
-
     public static final SlewRateLimiter slewRateX = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
 	public static final SlewRateLimiter slewRateY = new SlewRateLimiter(0.0);// JUST A PLACEHOLDER VALUE!!!
 	/* Setting up bindings for necessary control of the swerve drive platform */
