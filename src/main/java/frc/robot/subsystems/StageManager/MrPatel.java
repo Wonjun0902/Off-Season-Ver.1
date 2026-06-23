@@ -1,4 +1,4 @@
-package frc.robot.subsystems.StageManager.StageManager;
+package frc.robot.subsystems.StageManager;
 
 
 import static frc.robot.RobotContainer.autoAlign;
