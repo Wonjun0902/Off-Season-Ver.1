@@ -161,8 +161,8 @@ public class RobotContainer {
     private void configureBindings() {
     // TestControls.configureKingstonBindings();
     // TestControls.configureLimelightBindings();
-    DriverControls.configureBindings();
-    OperatorControls.configureBindings();
+    DriverControls.ConfigureBindings();
+    OperatorControls.ConfigureBindings();
     }
 
     public Command getAutonomousCommand() {
