@@ -104,19 +104,6 @@ public class RobotContainer {
     }
 
     /**
-    * Start with mode 1 on the limelight, which uses MT1 for heading estimation
-    * with a very low alpha.
-    */
-    public void limelightCalibration() {
-    LimelightHelpers.SetIMUAssistAlpha(limelightFRONT.getLimelightName(), 0.001);
-    LimelightHelpers.SetIMUMode(limelightFRONT.getLimelightName(), 1);
-    LimelightHelpers.SetIMUAssistAlpha(limelightBACK.getLimelightName(), 0.001);
-    LimelightHelpers.SetIMUMode(limelightBACK.getLimelightName(), 1);
-
-    // note to self, instead of TV use trust.
-    }
-
-    /**
    * Start with mode 1 on the limelight, which uses MT1 for heading estimation
    * with a very low alpha.
    */
