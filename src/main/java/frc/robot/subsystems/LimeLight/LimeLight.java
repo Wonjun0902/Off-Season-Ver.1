@@ -6,15 +6,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.LimelightHelpers;
 import frc.robot.lib.helpers.TagValues;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.swerve.*;
+import frc.robot.subsystems.Swerve.*;
 
 import static frc.robot.RobotContainer.getCachedAlliance;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 
-
-public class Limelight extends SubsystemBase {
+public class LimeLight {
     public enum LED_MODE {
         PIPELINE, OFF, BLINK, ON
     }
@@ -27,7 +26,6 @@ public class Limelight extends SubsystemBase {
     public LimelightHelpers.PoseEstimate estimate;
     public static int FrontTag, BackTag, blTag, brTag;
     private final String limelightName;
-    // public static final String[] limes = new String[] {"limelight-fr" /*, "limelight-fl", "limelight-bl", "limelight-br" */};
 
     private Field2d limelightField = new Field2d();
 
@@ -39,7 +37,7 @@ public class Limelight extends SubsystemBase {
     private volatile boolean useMegaTag2 = false;
     // private volatile boolean calibrating = false;
 
-    public Limelight(String limelightName, Swerve swerve) {
+    public LimeLight(String limelightName, Swerve swerve) {
         this.limelightName = limelightName;
         this.swerve = swerve;
         initialize();
