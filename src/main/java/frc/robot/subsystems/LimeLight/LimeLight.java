@@ -13,7 +13,7 @@ import static frc.robot.RobotContainer.getCachedAlliance;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class LimeLight {
+public class LimeLight extends SubsystemBase{
     public enum LED_MODE {
         PIPELINE, OFF, BLINK, ON
     }
@@ -202,7 +202,7 @@ public class LimeLight {
     }
 
     @Override
-    public void periodic() {
+    public void periodic(){
         updateEstimate();
         // updateSwervePose();
         updateSwervePoseLazy();
