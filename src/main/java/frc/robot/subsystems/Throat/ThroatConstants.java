@@ -45,6 +45,8 @@ public class ThroatConstants {
                 public static final double CURRENT_FF = 26.0;
 
                 public static final int FOLLOWER_LEFT_ID = 0;
+
+                public static final double TORQUE_DEADBAND = 1.0; //IN AMPS!
             }
 
             public class Right{
@@ -72,6 +74,8 @@ public class ThroatConstants {
                 public static final double CURRENT_FF = 26.0;
 
                 public static final int FOLLOWER_RIGHT_ID = 0;
+
+                public static final double TORQUE_DEADBAND = 1.0; //IN AMPS!
             }
         }
     }
