@@ -108,7 +108,7 @@ private static final SwerveRequest.FieldCentricFacingAngle angleLock = new Field
     .withHeadingPID(ANGLELOCK_P, ANGLELOCK_I, ANGLELOCK_D)
     .withMaxAbsRotationalRate(MAX_ROT_ANGLELOCK);
 
-public Command ShootOnMove(Supplier<Double> vx, Supplier<Double> vy){
+public Command lockForShootOnMove(Supplier<Double> vx, Supplier<Double> vy){
 
     return drivetrain.applyRequest(
         () -> {

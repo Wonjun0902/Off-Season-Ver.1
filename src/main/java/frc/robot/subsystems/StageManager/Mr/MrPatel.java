@@ -29,7 +29,6 @@ public class MrPatel {
     private Intake intake;
     private Shooter shooter;
     private Throat throat;
-    private ShootOnetheMove shootOnetheMove;
 
     public MrPatel(){
         this.deploy = deploy;
@@ -37,7 +36,6 @@ public class MrPatel {
         this.intake = intake;
         this.shooter = shooter;
         this.throat = throat;
-        this.shootOnetheMove = shootOnetheMove;
     }
 
     /**
@@ -50,7 +48,6 @@ public class MrPatel {
      * 6. Retract Intake
      * 7. shoot
      * 8. shoot from everywhere
-     * 9. shoot on the move
      */
 
     //Reset Robot's State - retract intake
@@ -98,5 +95,22 @@ public class MrPatel {
             Commands.waitSeconds(0.8).andThen(indexer.feedWithUnjam())
         );
     }
+
+    public Command shootFromEverywhere(){
+        return new ParallelCommandGroup(
+            shooter.shootfromEveryWhere(),
+            Commands.waitSeconds(0.4).andThen(throat.feed()),
+            Commands.waitSeconds(0.8).andThen(indexer.feedWithUnjam())
+        );
+    }
+
+    //Use this for actual bot implementation cause it got autoalign
+    public Command shootWithAutoAlign(){
+        return new ParallelCommandGroup(
+            autoAlign.alignToHub(),
+            shootFromEverywhere()
+        );
+    }
+
 
 }

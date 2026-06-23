@@ -77,7 +77,7 @@ public class IndexerIOSim extends SubsystemBase implements IndexerIO{
     
 
     @Override
-    public void Stop(){
+    public void stop(){
         leftMotor.stopMotor();
         rightMotor.stopMotor();
     }
