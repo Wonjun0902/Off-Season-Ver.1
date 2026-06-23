@@ -98,7 +98,7 @@ public class IndexerIOReal implements IndexerIO{
         }
     
         @Override
-        public void Stop(){
+        public void stop(){
             indexerLeft.stop();
             indexerRight.stop();
         }

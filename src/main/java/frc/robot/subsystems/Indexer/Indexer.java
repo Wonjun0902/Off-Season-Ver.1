@@ -35,7 +35,7 @@ public class Indexer extends SubsystemBase {
             io.spinSpeedLeft(FEED_SPEED_LEFT);
             io.spinSpeedRight(FEED_SPEED_RIGHT);
         }
-        , () -> io.Stop());
+        , () -> io.stop());
     }
 
     public Command outFeed(){
@@ -43,7 +43,7 @@ public class Indexer extends SubsystemBase {
             io.spinSpeedLeft(FEED_SPEED_LEFT.times(-1));
             io.spinSpeedRight(FEED_SPEED_RIGHT.times(-1));
         }
-        , () -> io.Stop());
+        , () -> io.stop());
     }
 
     public Command feedWithUnjam(){ 
@@ -68,11 +68,11 @@ public class Indexer extends SubsystemBase {
         //RIGHT UNJAM & FEED LOGIC
         Command rightLogic = Commands.either(unjamRight, feedRight, debouncedRight);
 
-        return Commands.parallel(leftLogic, rightLogic).repeatedly().finallyDo(() -> io.Stop());
+        return Commands.parallel(leftLogic, rightLogic).repeatedly().finallyDo(() -> io.stop());
     }
 
-    public Command Stop(){
-        return runOnce(() -> io.Stop());
+    public Command stop(){
+        return runOnce(() -> io.stop());
     }
 
     public Command feedForTime(double seconds){
@@ -110,7 +110,7 @@ public class Indexer extends SubsystemBase {
         //RIGHT UNJAM & FEED LOGIC
         Command rightLogic = Commands.either(unjamRight, feedRight, debouncedRight);
 
-        return Commands.parallel(leftLogic, rightLogic).withTimeout(seconds).finallyDo(() -> io.Stop());
+        return Commands.parallel(leftLogic, rightLogic).withTimeout(seconds).finallyDo(() -> io.stop());
     }
 
     @Override

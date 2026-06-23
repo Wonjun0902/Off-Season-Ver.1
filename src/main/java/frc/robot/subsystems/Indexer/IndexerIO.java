@@ -9,7 +9,7 @@ public interface IndexerIO {
     public void spinSpeedLeft(AngularVelocity speed);
     public void spinSpeedRight(AngularVelocity speed);
 
-    public void Stop();
+    public void stop();
 
     public void runDutyCycleRight(double dutyCycle);
     public void runDutyCycleLeft(double dutyCycle);

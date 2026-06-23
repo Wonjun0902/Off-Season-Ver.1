@@ -33,35 +33,35 @@ public class Deploy extends SubsystemBase{
         isDeployed = new Trigger(() -> io.getPosition().isNear(DEPLOYED_ANGLE, DEPLOY_TOLERANCE));
     }
 
-    public Command Deploy(){
+    public Command deploy(){
         return runOnce(() -> io.moveTo(M1_ANGLE));
     }
 
-    public Command Retract(){
+    public Command retract(){
         return runOnce(() -> io.moveTo(RETRACTED_ANGLE));
     }
 
-    public Command Agitate(Angle StartPoint, Angle EndPoint, Time duration){
+    public Command agitate(Angle StartPoint, Angle EndPoint, Time duration){
         return new SequentialCommandGroup(
             run(() -> io.moveTo(EndPoint)).withTimeout(duration),
             run(() -> io.moveTo(StartPoint)).withTimeout(duration)
         );
     }
 
-    public Command AgitateM1(){
-        return Agitate(DEPLOYED_ANGLE, M1_ANGLE, Seconds.of(0.5)); //Time Placeholder
+    public Command agitateM1(){
+        return agitate(DEPLOYED_ANGLE, M1_ANGLE, Seconds.of(0.5)); //Time Placeholder
     }
 
-    public Command AgitateM2(){
-        return Agitate(DEPLOYED_ANGLE, M2_ANGLE, Seconds.of(0.5)); //Time Placeholder
+    public Command agitateM2(){
+        return agitate(DEPLOYED_ANGLE, M2_ANGLE, Seconds.of(0.5)); //Time Placeholder
     }
 
-    public Command FullAgitate(){
-        return Agitate(DEPLOYED_ANGLE, RETRACTED_ANGLE, Seconds.of(0.5)); //Time Placeholder
+    public Command fullAgitate(){
+        return agitate(DEPLOYED_ANGLE, RETRACTED_ANGLE, Seconds.of(0.5)); //Time Placeholder
     }
 
-    public Command MidAgitate(){
-        return Agitate(M1_ANGLE, M2_ANGLE, Seconds.of(0.5)); //Time Placeholder
+    public Command midAgitate(){
+        return agitate(M1_ANGLE, M2_ANGLE, Seconds.of(0.5)); //Time Placeholder
     }
 
     public void periodic(){

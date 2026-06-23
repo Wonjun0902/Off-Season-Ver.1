@@ -54,7 +54,7 @@ public class Shooter extends SubsystemBase{
     }
 
     //Default Shooting, nothing special 
-    public Command Shoot(AngularVelocity shooterSpeed, Angle hoodAngle){
+    public Command shoot(AngularVelocity shooterSpeed, Angle hoodAngle){
         return runEnd( () -> {
             io.setHoodAngle(hoodAngle.plus(offSetAngle));
             io.setShooterSpeed(shooterSpeed.plus(offSetVelocity));
@@ -63,27 +63,27 @@ public class Shooter extends SubsystemBase{
         });
     }
 
-    public Command ShootfromEveryWhere(){
+    public Command shootfromEveryWhere(){
         double dist = AutoAlign.getHubPos().getDistance(current);
-        return Shoot(
+        return shoot(
             RotationsPerSecond.of(SHOOTER_LOOKUP_TABLE.get(dist)), 
             Rotations.of(HOOD_LOOKUP_TABLE.get(dist)));
     }
 
     public Command hubShot(){
-        return Shoot(SHOOTER_HUB_SPEED, HOOD_HUB_ANGLE);
+        return shoot(SHOOTER_HUB_SPEED, HOOD_HUB_ANGLE);
     }
 
     public Command towerShot(){
-        return Shoot(SHOOTER_TOWER_SPEED, HOOD_TOWER_ANGLE);
+        return shoot(SHOOTER_TOWER_SPEED, HOOD_TOWER_ANGLE);
     }
 
     public Command trenchShot(){
-        return Shoot(SHOOTER_TRENCH_SPEED, HOOD_TRENCH_ANGLE);
+        return shoot(SHOOTER_TRENCH_SPEED, HOOD_TRENCH_ANGLE);
     }
 
     public Command backShot(){
-        return Shoot(SHOOTER_BACK_SPEED, HOOD_BACK_ANGLE);
+        return shoot(SHOOTER_BACK_SPEED, HOOD_BACK_ANGLE);
     }
     
     public Runnable trimHoodUp(){

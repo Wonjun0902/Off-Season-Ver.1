@@ -28,14 +28,14 @@ public class Intake extends SubsystemBase{
         isIdle = new Trigger(() -> io.getBottomSpeed().isNear(RotationsPerSecond.of(0), ROTATION_TOLERANCE) && io.getTopSpeed().isNear(RotationsPerSecond.of(0), ROTATION_TOLERANCE));
     }
 
-    public Command intake(AngularVelocity speed){
+    public Command intake(){
         return new SequentialCommandGroup(
             run(() -> io.spinBottomRoller(INTAKE_SPEED_BOTTOM)),
             run(() -> io.spinTopRoller(INTAKE_SPEED_TOP))
         );
     }
 
-    public Command outtake(AngularVelocity speed){
+    public Command outtake(){
         return new SequentialCommandGroup(
             run(() -> io.spinBottomRoller(OUTTAKE_SPEED_BOTTOM)),
             run(() -> io.spinTopRoller(OUTTAKE_SPEED_TOP))
