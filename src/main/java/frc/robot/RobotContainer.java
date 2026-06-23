@@ -5,14 +5,35 @@ package frc.robot;
 
 import java.util.Optional;
 
+import static edu.wpi.first.units.Units.Rotations;
+
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Indexer.Indexer;
+import frc.robot.subsystems.Indexer.IndexerIOReal;
+import frc.robot.subsystems.Indexer.IndexerIOSim;
+import frc.robot.subsystems.Throat.Throat;
+import frc.robot.subsystems.Throat.ThroatIOReal;
+import frc.robot.subsystems.Throat.ThroatIOSim;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeIOReal;
+import frc.robot.subsystems.Intake.IntakeIOSim;
 import frc.robot.subsystems.Shooter.AutoAlign;
-import frc.robot.subsystems.Shooter.ShootOnetheMove;
-import frc.robot.subsystems.Swerve.Swerve;
-import frc.robot.subsystems.Swerve.TunerConstants;
-
-import frc.robot.subsystems.LimeLight.*;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterIOReal;
+import frc.robot.subsystems.Shooter.ShooterIOSim;
+import frc.robot.subsystems.StageManager.MrPatel;
+import frc.robot.subsystems.swerve.Swerve;
+import frc.robot.subsystems.swerve.Telemetry;
+import frc.robot.subsystems.swerve.TunerConstants;
+import frc.lib.Pathfinder;
+import frc.robot.subsystems.limelight.Limelight;
+import frc.lib.LimelightHelpers;
 
 public class RobotContainer {
 

@@ -1,14 +1,8 @@
-package frc.robot.subsystems.StageManager.Mr;
+package frc.robot.subsystems.StageManager.StageManager;
 
 
 import static frc.robot.RobotContainer.autoAlign;
-import static frc.robot.RobotContainer.shootOnetheMove;
-import static frc.robot.subsystems.Indexer.IndexerConstants.*;
-import static frc.robot.subsystems.Intake.IntakeConstants.INTAKE_SPEED_BOTTOM;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
-
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +14,6 @@ import frc.robot.subsystems.Throat.Throat;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Deploy.Deploy;
-import frc.robot.subsystems.Shooter.ShootOnetheMove;
 
 public class MrPatel {
 
@@ -30,7 +23,7 @@ public class MrPatel {
     private Shooter shooter;
     private Throat throat;
 
-    public MrPatel(){
+    public MrPatel(Deploy deploy, Indexer indexer, Intake intake, Shooter shooter, Throat throat){
         this.deploy = deploy;
         this.indexer = indexer;
         this.intake = intake;
@@ -114,3 +107,4 @@ public class MrPatel {
 
 
 }
+
