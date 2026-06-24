@@ -54,6 +54,17 @@ public class AutoAlign {
         );
     }
 
+    public Command alignForPass(Supplier<Double> vx, Supplier<Double> vy){
+        Rotation2d target = new Rotation2d(Math.PI);
+        return drivetrain.applyRequest(() -> {
+            return angleLock
+                .withTargetDirection(target)
+                .withForwardPerspective(ForwardPerspectiveValue.OperatorPerspective)
+                .withVelocityX(vx.get())
+                .withVelocityY(vy.get());
+            });
+    }
+
     public static Rotation2d getAlignAngle(){
         //Define the Angle of the Hub first
         Translation2d robotPos = drivetrain.getCachedState().Pose.getTranslation();

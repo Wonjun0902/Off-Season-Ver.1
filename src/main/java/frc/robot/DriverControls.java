@@ -1,7 +1,7 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
-
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.RobotContainer.autoAlign;
 import static frc.robot.RobotContainer.drivetrain;
 import static frc.robot.RobotContainer.mrPatel;
@@ -23,6 +23,7 @@ public class DriverControls {
 
     public static final CommandXboxController DRIVER_CONTROLLER = new CommandXboxController(0);
 
+	//Slew Rate Limiter = think of an Acceleration Limiter
     public static final SlewRateLimiter slewRateX = new SlewRateLimiter(SLEW_RATE_TRANSLATION.magnitude());// JUST A PLACEHOLDER VALUE!!!
 	public static final SlewRateLimiter slewRateY = new SlewRateLimiter(SLEW_RATE_TRANSLATION.magnitude());// JUST A PLACEHOLDER VALUE!!!
 	/* Setting up bindings for necessary control of the swerve drive platform */
@@ -79,24 +80,23 @@ public class DriverControls {
 		//PASS
 		DRIVER_CONTROLLER.a().whileTrue(
 			autoAlign.alignForPassing(
-				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
+				() -> slewRateX.calculate(DRIVER_CONTROLLER.getRightX()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter),
-				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
+				() -> slewRateY.calculate(DRIVER_CONTROLLER.getRightY()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter)
 			).alongWith(
 				mrPatel.shootFromEverywhere()
 			)
 		);
-
 		//SHOOT ON MOVE
 		DRIVER_CONTROLLER.b().whileTrue(
 			shootOnetheMove.lockForShootOnMove(
-				() -> slewRateX.calculate(-DRIVER_CONTROLLER.getLeftY()
+				() -> slewRateX.calculate(DRIVER_CONTROLLER.getRightX()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter),
-				() -> slewRateY.calculate(-DRIVER_CONTROLLER.getLeftX()
+				() -> slewRateY.calculate(DRIVER_CONTROLLER.getRightY()
 						*MaxSpeed12V.in(MetersPerSecond)
 						*speedLimiter)
 			).alongWith(mrPatel.shootFromEverywhere())
